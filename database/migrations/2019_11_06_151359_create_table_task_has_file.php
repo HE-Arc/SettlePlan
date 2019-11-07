@@ -16,7 +16,7 @@ class CreateTableTaskHasFile extends Migration
         Schema::create('task_has_file', function (Blueprint $table) {
           $table->primary(['task_id', 'file_id']);
           $table->foreign('task_id')->references('id')->on('tasks');
-          $table->foreign('file_id')->references('id')->on('files');          
+          $table->foreign('file_id')->references('id')->on('files');
         });
     }
 
