@@ -19,7 +19,7 @@ class CreateTasksTable extends Migration
             $table->string('description');
             $table->timestamp('end_at')->nullable();
             $table->bigInteger('category_id')->unsigned();
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('restrict');
             $table->timestamps();
         });
     }

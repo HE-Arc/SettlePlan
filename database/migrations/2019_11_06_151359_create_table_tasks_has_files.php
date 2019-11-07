@@ -17,8 +17,8 @@ class CreateTableTasksHasFiles extends Migration
 			$table->bigInteger('task_id')->unsigned();
 			$table->bigInteger('file_id')->unsigned();
           $table->primary(['task_id', 'file_id']);
-          $table->foreign('task_id')->references('id')->on('tasks');
-          $table->foreign('file_id')->references('id')->on('files');
+          $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade')->onUpdate('restrict');
+          $table->foreign('file_id')->references('id')->on('files')->onDelete('cascade')->onUpdate('restrict');
         });
     }
 
