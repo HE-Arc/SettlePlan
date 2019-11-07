@@ -15,9 +15,7 @@ class CreateTableFiles extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('path');
-            $table->primary('id');
-            $table->unique('path');
+            $table->string('path')->unique();
         });
     }
 
