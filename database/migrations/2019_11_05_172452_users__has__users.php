@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UserHasUser extends Migration
+class UsersHasUsers extends Migration
 {
 	/**
      * Run the migrations.
@@ -17,7 +17,7 @@ class UserHasUser extends Migration
             $table->bigInteger('user_id')->unsigned();
 			$table->bigInteger('user_id1')->unsigned();
 			$table->boolean('status');
-			
+
 			$table->primary(['user_id', 'user_id1']);
 
 			$table->foreign('user_id')->references('id')->on('users')
