@@ -13,12 +13,12 @@ class UserHasUser extends Migration
      */
     public function up()
     {
-        Schema::create('user_has_user', function (Blueprint $table) {
+        Schema::create('users_has_users', function (Blueprint $table) {
             $table->bigInteger('user_id')->unsigned();
 			$table->bigInteger('user_id1')->unsigned();
 			$table->boolean('status');
 			
-			$table->primary(['user_id', 'stock_id']);
+			$table->primary(['user_id', 'user_id1']);
 
 			$table->foreign('user_id')->references('id')->on('users')
 				->onUpdate('restrict')
@@ -36,6 +36,6 @@ class UserHasUser extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_has_user');
+        Schema::dropIfExists('users_has_users');
     }
 }

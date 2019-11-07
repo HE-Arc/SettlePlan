@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 		
-		DB::table('user_has_user')->insert([
+		DB::table('users_has_users')->insert([
             'user_id' => 0,
             'user_id1' => 1,
             'status' => 0,
@@ -58,10 +58,19 @@ class DatabaseSeeder extends Seeder
         ]);
 		
 		
-		DB::table('task')->insert([
+/*		DB::table('task')->insert([
             'user_id' => 0,
             'user_id1' => 1,
             'status' => 0,
         ]);
+		
+		DB::table('files')->insert([
+            'path' => Str::random(100)
+        ]);
+		
+		DB::table('tasks_has_files')->insert([
+            'task_id' => Str::random(10),
+            'file_id' => 0,
+        ]);*/
     }
 }
