@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Task;
+use App\Category;
+
 
 class TaskController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,9 +22,8 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = Task::all();
-        foreach ($tasks as $task) {
-           echo $tasks->name . '<br>';
-        }
+        return  view('tasks/index', ['tasks' => $tasks]);
+
     }
 
     /**
@@ -27,7 +33,8 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return  view('tasks/create', ['categories' => $categories]);
     }
 
     /**
@@ -38,7 +45,23 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dump($request);
+        $request->validate([
+          'name'=>'required',
+          'description'=>'required',
+          'category' => 'required',
+          'end_at' => 'nullable|date'
+        ]);
+
+        $task = new Task([
+          'name' => $request->get('name'),
+          'description' => $request->get('description'),
+          'end_at' => $request->get('end_at'),
+          'category_id' => $request->get('category'),
+        ]);
+
+        $task->save();
+        return redirect('/tasks')->with('success', 'Task saved!');
     }
 
     /**

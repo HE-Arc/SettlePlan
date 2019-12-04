@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
+    protected $fillable = ['name' , 'description' , 'end_at', 'category_id'];
+
     public function category()
     {
       return $this->belongsTo('App\Category');
