@@ -13,7 +13,7 @@ class UsersHasUsers extends Migration
      */
     public function up()
     {
-        Schema::create('users_has_users', function (Blueprint $table) {
+        Schema::create('user_user', function (Blueprint $table) {
             $table->bigInteger('user_id')->unsigned();
 			$table->bigInteger('user_id1')->unsigned();
 			$table->boolean('status');
