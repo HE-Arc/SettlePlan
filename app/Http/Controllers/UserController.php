@@ -123,6 +123,12 @@ class UserController extends Controller
       //TODO
       $user = User::find(Auth::user()->id);
 
+      $friendsDemand = UserUser::where('user_id1', $user->id)->where('status', 0)->value('user_id');
+
+      $friendsWait = UserUser::select()->where('user_id', $user->id)->where('status', 0)->value('user_id');
+
+      $friendsAccepted = UserUser::select()->where('user_id', $user->id)->where('status', 1)->value('user_id');
+
       $users = $user->users()->get();
 
       //dd($users);
