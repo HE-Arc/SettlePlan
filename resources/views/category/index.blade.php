@@ -4,13 +4,11 @@
 <div class="container">
 <div class="row">
 <div class="col-sm-12">
-  <h2> Catégories : </h2>
+  <h2 > Catégories : </h2>
 
-  <form action="{{ route('category.create')}}" method="post">
-    @csrf
-    @method('GET')
-    <button class="btn btn-large btn-primary" type="submit">New Category</button>
-  </form>
+  <div>
+    <a style="margin-bottom:5px;" href="{{ route('category.create')}}" class="btn btn-primary">Nouvelle catégorie</a>
+  </div> 
 
   <table class="table table-striped">
     <thead>

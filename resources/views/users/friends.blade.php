@@ -24,16 +24,18 @@
                         <button type="submit" class="btn btn-primary">Ajouter</button>
                     </div>
                 </form>
+
+                <table class="table table-striped">
+                    @foreach($users as $user)
+                    <tr>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td><input type="button" value="Supprimer" /></td>
+                    </tr>
+                    @endforeach
+                </table>
         </div>
     </div>
 </div>
-<table border="1">
-    @foreach($users as $user)
-    <tr>
-        <td>{{ $user->name }}</td>
-        <td>{{ $user->email }}</td>
-        <td><input type="button" value="Supprimer" /></td>
-    </tr>
-    @endforeach
-</table>
+
 @endsection
