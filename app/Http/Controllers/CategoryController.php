@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Category;
+use App\User;
 
 class CategoryController extends Controller
 {
@@ -59,10 +60,20 @@ class CategoryController extends Controller
      */
     public function show(user $user_id)
     {
-        if(User::find(auth()->user()->id)->users()->where(user_id1, $user_id)->orWhere(user_id2, $user_id))
-        $categorys = Category::all()->where('user_id', $user_id);
+        $user =  User::find(auth()->user()->id);
+        $temp = $user->users()->get();
+//->where('user_id1', $user_id)->orWhere('user_id2', $user_id)
+        dd($temp);
 
-        return view('category.home', $task);
+
+        /*if($temp->status == 1)
+        {
+            $categorys = Category::all()->where('user_id', $user_id);
+        }*/
+
+        //dd($categorys);
+
+//        return view('category.home', $task);
     }
 
     /**

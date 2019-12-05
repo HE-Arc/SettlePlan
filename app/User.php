@@ -47,7 +47,8 @@ class User extends Authenticatable
          return $this->belongsToMany('App\User',
            'user_user',
            'user_id',
-           'user_id1'
+           'user_id1',
+           'status'
           );
      }
 
