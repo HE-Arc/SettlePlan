@@ -1,16 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-<form method="POST" action="{{ route('users.update', $user->id) }}">
-  @csrf
-  @method('PUT')
-  <label for="name">Nom</label>
-  <input id="name" type="text" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus>
-  <br/>
-  <label for="email">E-Mail</label>
-  <input id="email" type="email" name="email" value="{{ $user->email }}" required autocomplete="email">
-  <br/>
-  <input type="submit" value="Modifier"/>
-  <input type="button" value="Annuler"/>
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8 offset-sm-2">
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            </br>
+            @endif
+            <form method="POST" action="{{ route('users.update', $user->id) }}">
+                @csrf
+                @method('PATH')
+
+                <div class="form-group">
+                    <label for="name">Nom</label>
+                    <input id="name" class="form-control" type="text" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-Mail</label>
+                    <input id="email" class="form-control" type="email" name="email" value="{{ $user->email }}" required autocomplete="email" />
+                </div>
+                <button class="btn btn-primary" type="submit">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection

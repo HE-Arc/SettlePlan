@@ -36,6 +36,6 @@ class UsersHasUsers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_has_users');
+        Schema::dropIfExists('user_user');
     }
 }

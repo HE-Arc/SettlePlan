@@ -20,13 +20,7 @@ class UserController extends Controller
     {
       //TODO
       //dd(Auth::user());
-      $user = User::find(1);
-
-      //dd($users);
-
-      return view('users.index', [
-      'user' => $user
-      ]);
+      return $this->show(1);
     }
 
     /**
@@ -49,11 +43,13 @@ class UserController extends Controller
     {
       $email = $request->input("email");
       $user = User::find($email);
-      $user->users->add($user);
+      //$user->users()->get()->add($user);
+
+      dd($user);
 
       $user->save();
 
-      return redirect()->route('users/friends')->with('success','Friend added successfully');
+      return redirect()->route('./users/friends')->with('success','Friend added successfully');
     }
 
     /**
@@ -64,7 +60,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+      $user = User::find($id);
+      return view('users.index', [
+      'user' => $user
+      ]);
     }
 
     /**
