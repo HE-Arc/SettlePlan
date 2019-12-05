@@ -12,11 +12,11 @@
       <td>{{ $user->email }}</td>
     </tr>
     <tr>
-      <td><a href="./users">Voir amis</a></td>
+      <td><a href="./users/friends">Voir amis</a></td>
     </tr>
     <tr>
-      <td><a href="./user/{{ $user->id }}/edit">Modifier</a></td>
-      <td><a href="./user/{{ $user->id }}/delete">Supprimer</a></td>
+      <td><a href="{{ route('users.edit', $user->id) }}">Modifier</a></td>
+      <td><a href="{{ route('users.destroy', $user->id) }}">Supprimer</a></td>
     </tr>
   </table>
 @endsection

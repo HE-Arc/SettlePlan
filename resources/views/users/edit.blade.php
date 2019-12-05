@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<form method="POST" action="user/{{ $user->id }}/update">
+<form method="POST" action="{{ route('users.update', $user->id) }}">
+  @csrf
+  @method('PUT')
   <label for="name">Nom</label>
   <input id="name" type="text" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus>
   <br/>
