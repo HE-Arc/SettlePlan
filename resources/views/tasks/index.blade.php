@@ -3,8 +3,23 @@
 @section('content')
 <div class="container">
 <div class="row">
+
+
 <div class="col-sm-12">
+
+  <div class="col-sm-12">
+
+    @if(session()->get('success'))
+      <div class="alert alert-success">
+        {{ session()->get('success') }}  
+      </div>
+    @endif
+  </div>
+
   <h2> Tâches : </h2> 
+    <div>
+  <a style="margin-bottom:5px;" href="{{ route('tasks.create')}}" class="btn btn-primary">Nouvelle Tâche</a>
+  </div> 
   <table class="table table-striped">
     <thead>
         <tr>
@@ -22,7 +37,11 @@
             <td>{{$task->id}}</td>
             <td>{{$task->name}}</td>
             <td style="word-break: break-word;">{{$task->description}}</td>
-            <td>{{date('d/m/y', strtotime($task->end_at))}}</td>
+              @if (empty($task->end_at))
+                <td></td>
+              @else
+                <td>{{date('d/m/y', strtotime($task->end_at))}}</td>
+              @endif
             <td>{{$task->category->name}}</td>
             <td>
                 <a href="{{ route('tasks.edit',$task->id)}}" class="btn btn-primary">Edit</a>

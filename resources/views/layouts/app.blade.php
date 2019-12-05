@@ -50,7 +50,7 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('tasks.index') }}">{{ __('Tasks') }}</a>
+                                <a class="nav-link" href="{{ route('tasks.index') }}"> Tâches </a>
                             </li>
 
                             <li class="nav-item dropdown">
