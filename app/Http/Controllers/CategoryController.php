@@ -57,13 +57,10 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(user $user_id)
     {
-        $owner = $category->user()->get();
-
-        $friends = $owner->user()->get();
-
-        $task = $category->task()->get();
+        if(User::find(auth()->user()->id)->users()->where(user_id1, $user_id)->orWhere(user_id2, $user_id))
+        $categorys = Category::all()->where('user_id', $user_id);
 
         return view('category.home', $task);
     }
