@@ -28,7 +28,6 @@ class TaskController extends Controller
         $tasks = Task::all();
         //$tasks = Task::with('category')->where('categories.user_id' , $userId)->get(); 
 
-        //$tasks = Category::with('tasks')->where('user_id' , $userId)->get(); 
 
 
         return  view('tasks/index', ['tasks' => $tasks]);

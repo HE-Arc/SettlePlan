@@ -20,13 +20,13 @@ class UserController extends Controller
     {
       //TODO
       //dd(Auth::user());
-      $user = User::find(1);
+     $user = User::find(1);
 
       //dd($users);
-
       return view('users.index', [
       'user' => $user
       ]);
+
     }
 
     /**
@@ -64,7 +64,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -77,7 +77,7 @@ class UserController extends Controller
     {
       //TODO
       //dd(Auth::user());
-      $user = User::find(1);
+      $user = User::find($id);
 
       //dd($users);
 
