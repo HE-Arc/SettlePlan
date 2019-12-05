@@ -18,10 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/user', 'UserController@index');
-Route::get('/users', 'UserController@users');
-Route::get('user/{id}/edit', 'UserController@edit');
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/users/friends', 'UserController@friends');
+
+Route::resource('users', 'UserController');
 
 Route::resource('category', 'CategoryController');
 Route::resource('tasks', 'TaskController');

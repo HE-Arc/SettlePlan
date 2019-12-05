@@ -2,8 +2,12 @@
 
 @section('content')
   <h1>Friends</h1>
-  <input type="text" placeholder="Nom..."/>
-  <input type="button" value="Ajouter"/>
+  <form action="{{ route('users.store') }}" method="POST">
+    @csrf
+    @method('GET')
+    <input type="text" placeholder="Email..." name="email"/>
+    <input type="submit" value="Ajouter"/>
+  </form>
   <table border="1">
     @foreach($users as $user)
         <tr>
