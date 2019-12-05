@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
-		DB::table('users_has_users')->insert([
+		DB::table('user_user')->insert([
             'user_id' => 1,
             'user_id1' => 2,
             'status' => 0,

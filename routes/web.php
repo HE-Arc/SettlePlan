@@ -12,11 +12,16 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth/login');
 });
 
 Auth::routes();
 
+//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/user', 'UserController@index');
+Route::get('/users', 'UserController@users');
+Route::get('user/{id}/edit', 'UserController@edit');
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('category', 'CategoryController');
+Route::resource('tasks', 'TaskController');

@@ -13,7 +13,7 @@ class Category extends Model
       return $this->belongsTo('App\User');
     }
 
-    public function task()
+    public function tasks()
     {
       return $this->hasMany('App\Task');
     }
