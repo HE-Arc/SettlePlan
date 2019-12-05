@@ -4,9 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UsersHasUsers extends Migration
+class CreateUserUserTable extends Migration
 {
-	/**
+    /**
      * Run the migrations.
      *
      * @return void
@@ -36,6 +36,6 @@ class UsersHasUsers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users_has_users');
+        Schema::dropIfExists('user_user');
     }
 }
