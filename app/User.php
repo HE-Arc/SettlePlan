@@ -50,4 +50,9 @@ class User extends Authenticatable
            'user_id1'
           );
      }
+
+     public function category()
+     {
+       return $this->hasMany('App\Category');
+     }
 }

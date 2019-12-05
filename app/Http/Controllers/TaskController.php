@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Task;
 use App\Category;
+use Illuminate\Database\Eloquent\Builder;
+
 
 
 class TaskController extends Controller
@@ -21,9 +23,15 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
-        return  view('tasks/index', ['tasks' => $tasks]);
+        $userId = auth()->user()->id;
 
+        $tasks = Task::all();
+        //$tasks = Task::with('category')->where('categories.user_id' , $userId)->get(); 
+
+        //$tasks = Category::with('tasks')->where('user_id' , $userId)->get(); 
+
+
+        return  view('tasks/index', ['tasks' => $tasks]);
     }
 
     /**
@@ -83,7 +91,10 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $categories = Category::all();
+        $task = Task::find($id);
+        return view('tasks.edit', ['task' => $task , 'categories' => $categories]);
     }
 
     /**
@@ -95,7 +106,21 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+          'name'=>'required',
+          'description'=>'required',
+          'category' => 'required',
+          'end_at' => 'nullable|date'
+        ]);
+
+        $task = Task::find($id);
+        $task->name = $request->get('name');
+        $task->description = $request->get('description');
+        $task->end_at = $request->get('end_at');
+        $task->category_id = $request->get('category');
+        $task->save();
+
+        return redirect('/tasks')->with('success', 'Task updated!');
     }
 
     /**
@@ -106,6 +131,9 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $task = Task::find($id);
+        $task->delete();
+
+        return redirect('/tasks')->with('success', 'Task deleted!');
     }
 }

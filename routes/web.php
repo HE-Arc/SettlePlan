@@ -22,4 +22,5 @@ Route::get('/users/friends', 'UserController@friends');
 
 Route::resource('users', 'UserController');
 
+Route::resource('category', 'CategoryController');
 Route::resource('tasks', 'TaskController');
