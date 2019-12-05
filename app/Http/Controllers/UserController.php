@@ -121,7 +121,9 @@ class UserController extends Controller
     public function friends()
     {
       //TODO
-      $user = User::find(auth()->user()->i);
+
+      $user = User::find(auth()->user()->id);
+      //$user = User::find(1);
 
       $users = $user->users()->get();
 
