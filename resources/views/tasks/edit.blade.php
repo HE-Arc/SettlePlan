@@ -38,7 +38,12 @@
             <div class="form-group">
 
                 <label for="date">Date de fin :</label>
-                <input type="date" class="form-control" name="end_at" value="{{date('Y-m-d', strtotime($task->end_at))}}" />
+                @if  (empty($task->end_at))
+                    <input type="date" class="form-control" name="end_at"  />
+                @else
+                    <input type="date" class="form-control" name="end_at" value="{{date('Y-m-d', strtotime($task->end_at))}}" />
+                @endif
+
             </div>
 
             
