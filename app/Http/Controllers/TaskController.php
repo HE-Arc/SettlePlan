@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Task;
 use App\Category;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
 
 
 
@@ -15,6 +16,7 @@ class TaskController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+
     }
     /**
      * Display a listing of the resource.
@@ -25,11 +27,14 @@ class TaskController extends Controller
     {
         $userId = auth()->user()->id;
 
-        $tasks = Task::all();
-        //$tasks = Task::with('category')->where('categories.user_id' , $userId)->get(); 
+        // $tasks = Task::all();
+        $tasks = Task::with('category')
+            ->join('categories', 'category_id', '=', 'categories.id')
+            ->where('categories.user_id' , $userId)->get();
 
 
 
+        //$tasks = Task::with('category')->where('user_id', $userId)->get(); 
         return  view('tasks/index', ['tasks' => $tasks]);
     }
 
@@ -40,7 +45,9 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $userId = auth()->user()->id;
+
+        $categories = Category::where('user_id', $userId)->get();
         return  view('tasks/create', ['categories' => $categories]);
     }
 
@@ -90,8 +97,9 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
+        $userId = auth()->user()->id;
 
-        $categories = Category::all();
+        $categories = Category::where('user_id', $userId)->get();
         $task = Task::find($id);
         return view('tasks.edit', ['task' => $task , 'categories' => $categories]);
     }
