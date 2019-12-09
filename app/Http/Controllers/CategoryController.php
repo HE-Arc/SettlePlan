@@ -19,7 +19,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categorys = Category::all()->where('user_id', auth()->user()->id);
-        return view('category.index', ['categorys' => $categorys]);
+        return view('category.index', ['categorys' => $categorys], ['userName' => auth()->user()->name]);
     }
 
     /**
@@ -68,11 +68,12 @@ class CategoryController extends Controller
         $temp = UserUser::where([['user_id',  auth()->user()->id], ['user_id1', $user_id]])->
         orWhere([['user_id', $user_id], ['user_id1',  auth()->user()->id]])->get();
 
-
         if(count($temp) == 1)
         {
+            $friend = User::find($user_id);
             $categorys = Category::all()->where('user_id', $user_id);
-            return view('category.index', ['categorys' => $categorys]);
+
+            return view('category.index', ['categorys' => $categorys], ['userName' => $friend->name]);
         }
     }
 
