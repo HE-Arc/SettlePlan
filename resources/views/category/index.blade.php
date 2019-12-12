@@ -6,9 +6,11 @@
 <div class="col-sm-12">
   <h2 > Categories of {{$userName}} : </h2>
 
-  <div>
-    <a style="margin-bottom:5px;" href="{{ route('category.create')}}" class="btn btn-primary">Nouvelle catégorie</a>
-  </div>
+  @if($newCat == 1)
+      <div>
+        <a style="margin-bottom:5px;" href="{{ route('category.create')}}" class="btn btn-primary">New category</a>
+      </div>
+  @endif
 
   <table class="table table-striped">
     <thead>
