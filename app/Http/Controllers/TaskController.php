@@ -28,7 +28,8 @@ class TaskController extends Controller
         $userId = auth()->user()->id;
 
         // $tasks = Task::all();
-        $tasks = Task::with('category')
+        DB::enableQueryLog(); 
+         $tasks = Task::with('category')
             ->join('categories', 'category_id', '=', 'categories.id')
             ->where('categories.user_id' , $userId)->get();
 
