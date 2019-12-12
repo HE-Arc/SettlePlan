@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Auth\Guard;
 
 use App\User;
+use App\UserUser;
 
 class UserController extends Controller
 {
@@ -122,6 +123,20 @@ class UserController extends Controller
     {
       //TODO
       $user = User::find(Auth::user()->id);
+
+      //$friendsDemandID = UserUser::where('user_id1', $user->id)->where('status', 0)->value('user_id');
+
+      //$friendsDemand = DB::
+
+      //$friendsDemand = NULL;
+
+      //foreach ($friendsDemandID as $key => $value) {
+
+      //}
+
+      //$friendsWait = UserUser::select()->where('user_id', $user->id)->where('status', 0)->value('user_id1');
+
+      //$friendsAccepted = UserUser::select()->where('user_id', $user->id)->orWhere()->where('status', 1)->value('user_id');
 
       $users = $user->users()->get();
 
