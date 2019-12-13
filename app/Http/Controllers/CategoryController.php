@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\User;
 use App\UserUser;
+use App\Task;
 
 use Illuminate\Support\Facades\DB;
 
@@ -61,19 +62,19 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($user_id)
+    public function show($category_id)
     {
-        DB::enableQueryLog();
+        $userId = auth()->user()->id;
 
-        $temp = UserUser::where([['user_id',  auth()->user()->id], ['user_id1', $user_id]])->
-        orWhere([['user_id', $user_id], ['user_id1',  auth()->user()->id]])->get();
+        // check if the user own the category
 
-        if(count($temp) == 1)
+        $category = Category::all()->where('user_id', $userId)->where("id", $category_id);
+
+        if(count($category) == 1)
         {
-            $friend = User::find($user_id);
-            $categorys = Category::all()->where('user_id', $user_id);
+            $tasks = Task::all()->where("category_id", $category_id);
 
-            return view('category.index', ['categorys' => $categorys , 'userName' => $friend->name , 'newCat' => 0]);
+            return view('category.detail', ['tasks' => $tasks , 'userName' => auth()->user()->name , 'newTask' => 0, 'categoryName' => $category]);
         }
     }
 
