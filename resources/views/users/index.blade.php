@@ -17,11 +17,11 @@
           <td>{{ $user->email }}</td>
         </tr>
         <tr>
-          <td><a href="./users/friends">Voir amis</a></td>
+          <td colspan="2"><a href="./users/friends" class="btn btn-success">Voir amis</a></td>
         </tr>
         <tr>
-          <td><a href="{{ route('users.edit', $user->id) }}">Modifier</a></td>
-          <td><a href="{{ route('users.destroy', $user->id) }}">Supprimer</a></td>
+          <td><a href="{{ route('users.edit', $user->id) }}"  class="btn btn-primary">Modifier</a></td>
+          <td><a href="{{ route('users.destroy', $user->id) }}" class="btn btn-danger">Supprimer</a></td>
         </tr>
       </table>
 
