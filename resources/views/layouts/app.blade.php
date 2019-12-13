@@ -51,11 +51,11 @@
                         @else
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('category.index') }}"> Catégories </a>
+                                <a class="nav-link" href="{{ route('category.index') }}"> Categories </a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('tasks.index') }}"> Tâches </a>
+                                <a class="nav-link" href="{{ route('tasks.index') }}"> Tasks </a>
                             </li>
 
                             <li class="nav-item dropdown">

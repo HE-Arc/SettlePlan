@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Category;
 use App\User;
 use App\UserUser;
+use App\Task;
 
 use Illuminate\Support\Facades\DB;
 
@@ -19,7 +20,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categorys = Category::all()->where('user_id', auth()->user()->id);
-        return view('category.index', ['categorys' => $categorys], ['userName' => auth()->user()->name]);
+        return view('category.index', ['categorys' => $categorys, 'userName' => auth()->user()->name, 'newCat' => 1]);
     }
 
     /**
@@ -61,10 +62,30 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(int $user_id)
+    public function show($category_id)
     {
-        DB::enableQueryLog();
+        $userId = auth()->user()->id;
 
+        // check if the user own the category
+
+        $category = Category::all()->where('user_id', $userId)->where("id", $category_id);
+
+        if(count($category) == 1)
+        {
+            $tasks = Task::all()->where("category_id", $category_id);
+
+            return view('category.detail', ['tasks' => $tasks , 'userName' => auth()->user()->name , 'newTask' => 0, 'categoryName' => $category]);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showUser($user_id)
+    {
         $temp = UserUser::where([['user_id',  auth()->user()->id], ['user_id1', $user_id]])->
         orWhere([['user_id', $user_id], ['user_id1',  auth()->user()->id]])->get();
 
@@ -73,7 +94,22 @@ class CategoryController extends Controller
             $friend = User::find($user_id);
             $categorys = Category::all()->where('user_id', $user_id);
 
-            return view('category.index', ['categorys' => $categorys], ['userName' => $friend->name]);
+            return view('category.index', ['categorys' => $categorys , 'userName' => $friend->name , 'newCat' => 0]);
+        }
+    }
+
+    public function showUserCategory($user_id, $category_id)
+    {
+        $temp = UserUser::where([['user_id',  auth()->user()->id], ['user_id1', $user_id]])->
+        orWhere([['user_id', $user_id], ['user_id1',  auth()->user()->id]])->get();
+
+        if(count($temp) == 1)
+        {
+            $friend = User::find($user_id);
+            $categoryName = Category::all()->where(['id', $category_id]);
+            $tasks = Category::all()->where(['category_id', $category_id]);
+
+            //return view('task.index', ['categorys' => $categorys , 'userName' => $friend->name , 'newCat' => 0]);
         }
     }
 
