@@ -121,29 +121,63 @@ class UserController extends Controller
 
     public function friends()
     {
-      //TODO
+
+      $friendsDemand = null;
+      $friendsWait = null;
+
       $user = User::find(Auth::user()->id);
 
-      //$friendsDemandID = UserUser::where('user_id1', $user->id)->where('status', 0)->value('user_id');
+      $friendsDemandID = UserUser::where(['user_id' => $user->id, 'status' => 0])->get();
 
-      //$friendsDemand = DB::
+      foreach ($friendsDemandID as $value) {
+        $friendsDemand[] = User::find($value->getUserIdDemand());
+      }
 
-      //$friendsDemand = NULL;
+      $friendsWaitID = UserUser::where(['user_id1' => $user->id, 'status' => 0])->get();
 
-      //foreach ($friendsDemandID as $key => $value) {
+      foreach ($friendsWaitID as $value) {
+        $friendsWait[] = User::find($value->getUserIdWait());
+      }
 
-      //}
+      $friendsAcceptedID1 = UserUser::where(['user_id' => $user->id, 'status' => 1])->get();
+      $friendsAcceptedID2 = UserUser::where(['user_id1' => $user->id, 'status' => 1])->get();
 
-      //$friendsWait = UserUser::select()->where('user_id', $user->id)->where('status', 0)->value('user_id1');
+      foreach ($friendsAcceptedID1 as $value) {
+        $friendsAccepted[] = User::find($value->getUserIdDemand());
+      }
 
-      //$friendsAccepted = UserUser::select()->where('user_id', $user->id)->orWhere()->where('status', 1)->value('user_id');
+      foreach ($friendsAcceptedID2 as $value) {
+        $friendsAccepted[] = User::find($value->getUserIdWait());
+      }
 
-      $users = $user->users()->get();
-
-      //dd($users);
 
       return view('users.friends', [
-      'users' => $users
+      'friendsDemand' => $friendsDemand,
+      'friendsWait' => $friendsWait,
+      'friendsAccepted' => $friendsAccepted,
       ]);
+    }
+
+    public function deleteFriend($request)
+    {
+      /*
+        $user = User::find(Auth::user()->id);
+
+        dd($request);
+
+
+        $result = UserUser::where(['user_id' => $user->id, 'user_id1' =>$idFriend])->delete();
+
+        dd($result);
+
+        //Test Result
+
+        $result = UserUser::where(['user_id1' => $user->id, 'user_id' =>$idFriend])->delete();
+        */
+    }
+
+    public function acceptedDemand()
+    {
+
     }
 }

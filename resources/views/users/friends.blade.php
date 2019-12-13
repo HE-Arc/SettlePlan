@@ -24,13 +24,33 @@
                         <button type="submit" class="btn btn-primary">Ajouter</button>
                     </div>
                 </form>
-
+                <h3>Demandes d'amis</h3>
                 <table class="table table-striped">
-                    @foreach($users as $user)
+                    @foreach($friendsDemand as $user)
                     <tr>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
-                        <td><input type="button" value="Supprimer" /></td>
+                        <td><a href="./delete_friend" class="btn btn-danger">Supprimer</a></td>
+                    </tr>
+                    @endforeach
+                </table>
+                <h3>Amis en attentes</h3>
+                <table class="table table-striped">
+                    @foreach($friendsWait as $user)
+                    <tr>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td><a href="./accepted_demand" class="btn btn-success">Accepter</a></td>
+                    </tr>
+                    @endforeach
+                </table>
+                <h3>Amis</h3>
+                <table class="table table-striped">
+                    @foreach($friendsAccepted as $user)
+                    <tr>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td><a href="./delete_friend" class="btn btn-danger">Supprimer l'ami</a></td>
                     </tr>
                     @endforeach
                 </table>

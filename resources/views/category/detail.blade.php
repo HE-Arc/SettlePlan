@@ -4,11 +4,11 @@
 <div class="container">
 <div class="row">
 <div class="col-sm-12">
-  <h2 > Categories of {{$userName}} : </h2>
+  <h2 > Task of {{$categoryName}} from {{$userName}} : </h2>
 
-  @if($newCat == 1)
+  @if($newTask == 1)
       <div>
-        <a style="margin-bottom:5px;" href="{{ route('category.create')}}" class="btn btn-primary">New category</a>
+        <a style="margin-bottom:5px;" href="{{ route('task.create')}}" class="btn btn-primary">New Task</a>
       </div>
   @endif
 
@@ -16,17 +16,17 @@
     <thead>
         <tr>
           <td>Name</td>
-          <td>prive</td>
+          <td>description</td>
           <td colspan = 2>Actions</td>
         </tr>
     </thead>
     <tbody>
-        @foreach($categorys as $category)
+        @foreach($tasks as $task)
         <tr>
             <td>
-                <a href="{{ route('tasks.index')}}">{{$category->name}}</a>
+                <a href="{{ route('tasks.index')}}">{{$task->name}}</a>
             </td>
-            <td>{{$category->private}}</td>
+            <td>{{$task->description}}</td>
 
         @endforeach
     </tbody>

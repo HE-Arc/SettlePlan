@@ -20,10 +20,15 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/users/accepted_demand', 'UserController@acceptedDemand');
+Route::get('/users/delete_friend', 'UserController@deleteFriend');
 Route::get('/users/friends', 'UserController@friends');
 
 Route::resource('users', 'UserController');
 
 Route::resource('category', 'CategoryController');
+
+Route::get('users/friend/{user_id}', 'CategoryController@showUser');
+Route::get('users/friend/{user_id}/{category_id}', 'CategoryController@showUserCategory');
 
 Route::resource('tasks', 'TaskController');
