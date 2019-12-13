@@ -121,7 +121,11 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $userId = auth()->user()->id;
+
+        $categories = Category::find($id)->where('user_id', $userId)->get();
+
+        return view('tasks.edit', ['task' => $task , 'categories' => $categories]);
     }
 
     /**
