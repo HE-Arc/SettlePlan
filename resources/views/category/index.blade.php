@@ -23,7 +23,9 @@
     <tbody>
         @foreach($categorys as $category)
         <tr>
-            <td>{{$category->name}}</td>
+            <td>
+                <a href="{{ route('tasks.index')}}">{{$category->name}}</a>
+            </td>
             <td>{{$category->private}}</td>
 
         @endforeach

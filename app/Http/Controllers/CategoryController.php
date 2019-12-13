@@ -61,7 +61,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(int $user_id)
+    public function show($user_id)
     {
         DB::enableQueryLog();
 
@@ -74,6 +74,41 @@ class CategoryController extends Controller
             $categorys = Category::all()->where('user_id', $user_id);
 
             return view('category.index', ['categorys' => $categorys , 'userName' => $friend->name , 'newCat' => 0]);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function showUser($user_id)
+    {
+        $temp = UserUser::where([['user_id',  auth()->user()->id], ['user_id1', $user_id]])->
+        orWhere([['user_id', $user_id], ['user_id1',  auth()->user()->id]])->get();
+
+        if(count($temp) == 1)
+        {
+            $friend = User::find($user_id);
+            $categorys = Category::all()->where('user_id', $user_id);
+
+            return view('category.index', ['categorys' => $categorys , 'userName' => $friend->name , 'newCat' => 0]);
+        }
+    }
+
+    public function showUserCategory($user_id, $category_id)
+    {
+        $temp = UserUser::where([['user_id',  auth()->user()->id], ['user_id1', $user_id]])->
+        orWhere([['user_id', $user_id], ['user_id1',  auth()->user()->id]])->get();
+
+        if(count($temp) == 1)
+        {
+            $friend = User::find($user_id);
+            $categoryName = Category::all()->where(['id', $category_id]);
+            $tasks = Category::all()->where(['category_id', $category_id]);
+
+            //return view('task.index', ['categorys' => $categorys , 'userName' => $friend->name , 'newCat' => 0]);
         }
     }
 
