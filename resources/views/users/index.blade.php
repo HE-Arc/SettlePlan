@@ -9,7 +9,7 @@
       <h2>User</h2>
       <table>
         <tr>
-          <td>Nom : </td>
+          <td>Name : </td>
           <td>{{ $user->name }}</td>
         </tr>
         <tr>
@@ -17,11 +17,8 @@
           <td>{{ $user->email }}</td>
         </tr>
         <tr>
-          <td colspan="2"><a href="./users/friends" class="btn btn-success">Voir amis</a></td>
-        </tr>
-        <tr>
-          <td><a href="{{ route('users.edit', $user->id) }}"  class="btn btn-primary">Modifier</a></td>
-          <td><a href="{{ route('users.destroy', $user->id) }}" class="btn btn-danger">Supprimer</a></td>
+          <td><a href="{{ route('users.edit', $user->id) }}"  class="btn btn-primary">Edit</a></td>
+          <td><a href="{{ route('users.destroy', $user->id) }}" class="btn btn-danger">Delete</a></td>
         </tr>
       </table>
 
