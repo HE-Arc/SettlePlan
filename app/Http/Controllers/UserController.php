@@ -45,9 +45,22 @@ class UserController extends Controller
       $user = User::find(Auth::user()->id);
       $email = $request->input('email');
       $friend = User::all()->where('email', $email)->first();
-      $user->users()->attach($friend->id);
 
-      //dd($user);
+      foreach ($user->users()->get() as $value) {
+        if($value->id == $friend->id)
+        {
+          return $this->friends();
+        }
+      }
+
+      foreach ($friend->users()->get() as $value) {
+        if($value->id == $user->id)
+        {
+          return $this->friends();
+        }
+      }
+      
+      $user->users()->attach($friend->id);
 
       $user->save();
 
