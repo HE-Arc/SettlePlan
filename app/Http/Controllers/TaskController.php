@@ -27,14 +27,13 @@ class TaskController extends Controller
     {
         $userId = auth()->user()->id;
 
-        // $tasks = Task::all();
+         //$tasks = Task::all();
         DB::enableQueryLog(); 
-         $tasks = Task::with('category')
+        $tasks = Task::select('tasks.*')->with('category')
             ->join('categories', 'category_id', '=', 'categories.id')
             ->where('categories.user_id' , $userId)->get();
 
-
-
+        //dd($tasks);
         //$tasks = Task::with('category')->where('user_id', $userId)->get(); 
         return  view('tasks/index', ['tasks' => $tasks]);
     }
@@ -90,6 +89,11 @@ class TaskController extends Controller
         //
     }
 
+    /*public function show($id , $id2)
+    {
+        dd("test");
+    }*/
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -102,6 +106,7 @@ class TaskController extends Controller
 
         $categories = Category::where('user_id', $userId)->get();
         $task = Task::find($id);
+        //dd($task);
         return view('tasks.edit', ['task' => $task , 'categories' => $categories]);
     }
 
