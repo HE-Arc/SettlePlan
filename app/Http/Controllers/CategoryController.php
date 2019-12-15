@@ -88,9 +88,10 @@ class CategoryController extends Controller
                 }
             }
 
-            /*if ($user->can('update', $user, Task::class)) {
+            /*if ($user->can('update',$category[0])) {
                 dd('test');
             } */
+            
 
 
             return view('category.detail', ['tasks' => $tasks , 'userName' => auth()->user()->name , 'newTask' => 1, 'categoryName' => $category[0]->name,  'files' => $files]);

@@ -60,8 +60,6 @@ class TaskController extends Controller
     {
         $userId = auth()->user()->id;
 
-
-
         $categories = Category::where('user_id', $userId)->get();
         return  view('tasks/create', ['categories' => $categories]);
     }
@@ -157,6 +155,15 @@ class TaskController extends Controller
         $task->end_at = $request->get('end_at');
         $task->category_id = $request->get('category');
         $task->save();
+
+        if ($file = $request->file('file')) {
+             $path = Storage::putFile('file', $file);
+             $fileDB = new \App\File();
+             $fileDB->setPath($path);
+             $fileDB->save();
+
+             $task->files()->attach($fileDB->id);
+        }
 
         return redirect('/category/'. $task->category_id)->with('success', 'Task updated!');
     }

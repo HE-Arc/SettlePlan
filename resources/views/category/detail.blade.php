@@ -44,6 +44,7 @@
                         @else
                             <td><a href="../storage/app/{{ $files[$task->id] }}">File</a></td>
                         @endif
+                        @can('crud', $task->category)
                         <td>
                             <a href="{{ route('tasks.edit', $task->id)}}" class="btn btn-primary">Edit</a>
                         </td>
@@ -54,6 +55,7 @@
                                 <button class="btn btn-danger" type="submit">Delete</button>
                             </form>
                         </td>
+                        @endcan
                     </tr>
                     @endforeach
                 </tbody>
