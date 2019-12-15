@@ -11,15 +11,15 @@
 
     @if(session()->get('success'))
       <div class="alert alert-success">
-        {{ session()->get('success') }}  
+        {{ session()->get('success') }}
       </div>
     @endif
   </div>
 
-  <h2> Tâches : </h2> 
+  <h2> Tâches : </h2>
     <div>
   <a style="margin-bottom:5px;" href="{{ route('tasks.create')}}" class="btn btn-primary">Nouvelle Tâche</a>
-  </div> 
+  </div>
   <table class="table table-striped">
     <thead>
         <tr>
@@ -28,6 +28,7 @@
           <td>Description</td>
           <td>Date de fin</td>
           <td>Category</td>
+          <td>File</td>
           <td colspan = 2>Actions</td>
         </tr>
     </thead>
@@ -43,6 +44,13 @@
                 <td>{{date('d/m/y', strtotime($task->end_at))}}</td>
               @endif
             <td>{{$task->category->name}}</td>
+
+            @if (!isset($files[$task->id]))
+              <td></td>
+            @else
+              <td><a href="../storage/app/{{ $files[$task->id] }}">File</a></td>
+            @endif
+
             <td>
                 <a href="{{ route('tasks.edit',$task->id)}}" class="btn btn-primary">Edit</a>
             </td>
@@ -61,5 +69,3 @@
 </div>
 </div>
 @endsection
-
-

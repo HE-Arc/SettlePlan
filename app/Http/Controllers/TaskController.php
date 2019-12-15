@@ -32,8 +32,23 @@ class TaskController extends Controller
         /*$userId = auth()->user()->id;
         $tasks = Task::select('tasks.*')->with('category')
             ->join('categories', 'category_id', '=', 'categories.id')
-            ->where('categories.user_id' , $userId)->get();
-        return  view('tasks/index', ['tasks' => $tasks]);*/
+            ->where('categories.user_id' , $userId)->get();*/
+
+        //dd($tasks[1]->files()->get());
+
+        $files = null;
+
+        foreach ($tasks as $key => $value) {
+          $filesTask = $value->files()->get();
+          if(isset($filesTask[0]))
+          {
+            $files[$value->id] = $filesTask[0]->path;
+          }
+        }
+        //dd($files);
+        //dd($tasks);
+        //$tasks = Task::with('category')->where('user_id', $userId)->get();
+        return  view('tasks/index', ['tasks' => $tasks, 'files' => $files]);
     }
 
     /**

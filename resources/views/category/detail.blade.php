@@ -14,6 +14,8 @@
                         <td>Description</td>
                         <td>Date de fin</td>
                         <td>Category</td>
+                        <td>Fichier</td>
+
                         <td colspan=2>Actions</td>
                     </tr>
                 </thead>
@@ -32,6 +34,12 @@
                         <td>
                             <a href="{{ route('tasks.edit', $task->id)}}" class="btn btn-primary">Edit</a>
                         </td>
+
+                        @if (!isset($files[$task->id]))
+                        <td></td>
+                        @else
+                        <td><a href="../storage/app/{{ $files[$task->id] }}">File</a></td>
+                        @endif
                         <td>
                             <form action="{{ route('tasks.destroy', $task->id)}}" method="post">
                                 @csrf

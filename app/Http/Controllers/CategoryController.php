@@ -78,11 +78,21 @@ class CategoryController extends Controller
 
             $user = auth()->user();
 
-            if ($user->can('update', $user, Task::class)) {
-                dd('test');
-            } 
+            $files = null;
 
-            return view('category.detail', ['tasks' => $tasks , 'userName' => auth()->user()->name , 'newTask' => 0, 'categoryName' => $category[0]->name]);
+            foreach ($tasks as $key => $value) {
+                $filesTask = $value->files()->get();
+                if(isset($filesTask[0]))
+                {
+                    $files[$value->id] = $filesTask[0]->path;
+                }
+            }
+
+            /*if ($user->can('update', $user, Task::class)) {
+                dd('test');
+            } */
+
+            return view('category.detail', ['tasks' => $tasks , 'userName' => auth()->user()->name , 'newTask' => 0, 'categoryName' => $category[0]->name,  'files' => $files]);
         }
     }
 
@@ -104,6 +114,7 @@ class CategoryController extends Controller
 
             return view('category.index', ['categorys' => $categorys , 'userName' => $friend->name , 'newCat' => 0]);
         }
+
     }
 
     public function showUserCategory($user_id, $category_id)
