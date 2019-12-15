@@ -158,7 +158,7 @@ class TaskController extends Controller
         $task->category_id = $request->get('category');
         $task->save();
 
-        return redirect('\/category\/'. $task->category_id)->with('success', 'Task updated!');
+        return redirect('/category/'. $task->category_id)->with('success', 'Task updated!');
     }
 
     /**
@@ -173,7 +173,7 @@ class TaskController extends Controller
         $categoryID = $task->category_id;
         $task->delete();
 
-        return redirect("/category/". $categoryID)->with('success', 'Task deleted!');
+        return redirect('/category/'. $categoryID)->with('success', 'Task deleted!');
 
     }
 }
