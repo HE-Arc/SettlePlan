@@ -24,10 +24,12 @@ Route::get('/users/friends', 'UserController@friends')->name('friends');
 Route::resource('files', 'FileController');
 Route::resource('users', 'UserController');
 Route::resource('category', 'CategoryController');
-Route::get('users/friend/{user_id}', 'CategoryController@showUser');
+Route::get('users/friend/{user_id}', 'CategoryController@showUser')->name('user.friends');
 Route::get('users/friend/{user_id}/{category_id}', 'CategoryController@showUserCategory');
-Route::resource('tasks', 'TaskController');
+Route::resource('tasks', 'TaskController')->except('index');
+
+
+
 
 Route::prefix('/category/{id}')->group(function () {
-    Route::resource('tasks', 'TaskController');
 });

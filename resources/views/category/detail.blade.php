@@ -30,7 +30,7 @@
                         @endif
                         <td>{{$task->category->name}}</td>
                         <td>
-                            <a href="{{ route('tasks.edit', $categoryId , $task->id)}}" class="btn btn-primary">Edit</a>
+                            <a href="{{ route('tasks.edit', $task->id)}}" class="btn btn-primary">Edit</a>
                         </td>
                         <td>
                             <form action="{{ route('tasks.destroy', $task->id)}}" method="post">

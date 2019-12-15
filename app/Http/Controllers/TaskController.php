@@ -29,16 +29,11 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $userId = auth()->user()->id;
-
-        //DB::enableQueryLog(); 
+        /*$userId = auth()->user()->id;
         $tasks = Task::select('tasks.*')->with('category')
             ->join('categories', 'category_id', '=', 'categories.id')
             ->where('categories.user_id' , $userId)->get();
-        //$tasks = Task::all();
-        //dd($tasks);
-        //$tasks = Task::with('category')->where('user_id', $userId)->get();
-        return  view('tasks/index', ['tasks' => $tasks]);
+        return  view('tasks/index', ['tasks' => $tasks]);*/
     }
 
     /**
@@ -49,6 +44,8 @@ class TaskController extends Controller
     public function create()
     {
         $userId = auth()->user()->id;
+
+
 
         $categories = Category::where('user_id', $userId)->get();
         return  view('tasks/create', ['categories' => $categories]);

@@ -76,6 +76,12 @@ class CategoryController extends Controller
         {
             $tasks = Task::where("category_id", $category_id)->get();
 
+            $user = auth()->user();
+
+            if ($user->can('update', $user, Task::class)) {
+                dd('test');
+            } 
+
             return view('category.detail', ['tasks' => $tasks , 'userName' => auth()->user()->name , 'newTask' => 0, 'categoryName' => $category[0]->name]);
         }
     }
