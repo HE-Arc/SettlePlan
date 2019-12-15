@@ -19,8 +19,6 @@ class UserController extends Controller
      */
     public function index()
     {
-      //TODO
-      //dd(Auth::user());
       return $this->show(Auth::user()->id);
     }
 
@@ -45,9 +43,22 @@ class UserController extends Controller
       $user = User::find(Auth::user()->id);
       $email = $request->input('email');
       $friend = User::all()->where('email', $email)->first();
-      $user->users()->attach($friend->id);
 
-      //dd($user);
+      foreach ($user->users()->get() as $value) {
+        if($value->id == $friend->id)
+        {
+          return $this->friends();
+        }
+      }
+
+      foreach ($friend->users()->get() as $value) {
+        if($value->id == $user->id)
+        {
+          return $this->friends();
+        }
+      }
+
+      $user->users()->attach($friend->id);
 
       $user->save();
 
@@ -76,12 +87,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-      //TODO
-      //dd(Auth::user());
       $user = User::find($id);
-
-      //dd($users);
-
       return view('users.edit', [
       'user' => $user
       ]);
@@ -158,26 +164,31 @@ class UserController extends Controller
       ]);
     }
 
-    public function deleteFriend($request)
+    public function deleteFriend($friend_id)
     {
-      /*
         $user = User::find(Auth::user()->id);
 
-        dd($request);
+        $result = UserUser::where(['user_id' => $user->id, 'user_id1' =>$friend_id])->delete();
 
+        if ($result == 0)
+        {
+          $result = UserUser::where(['user_id1' => $user->id, 'user_id' =>$friend_id])->delete();
 
-        $result = UserUser::where(['user_id' => $user->id, 'user_id1' =>$idFriend])->delete();
+          if ($result == 0)
+          {
+            return redirect()->route('friends')->with('error','La demande d\'ami n\'a pas été supprimée');
+          }
+        }
 
-        dd($result);
-
-        //Test Result
-
-        $result = UserUser::where(['user_id1' => $user->id, 'user_id' =>$idFriend])->delete();
-        */
+        return redirect()->route('friends')->with('success','La demande d\'ami a été supprimée');
     }
 
-    public function acceptedDemand()
+    public function acceptDemand($friend_id)
     {
+      $user = User::find(Auth::user()->id);
 
+      $friendRel = UserUser::where(['user_id' => $friend_id, 'user_id1' => $user->id])->update(['status' => 1]);
+
+      return redirect()->route('friends')->with('success','La demande d\'ami a été supprimée');
     }
 }

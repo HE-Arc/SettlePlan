@@ -2,30 +2,24 @@
 
 @section('content')
 
-
 <div class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <h2>User</h2>
-      <table>
-        <tr>
-          <td>Nom : </td>
-          <td>{{ $user->name }}</td>
-        </tr>
-        <tr>
-          <td>Email : </td>
-          <td>{{ $user->email }}</td>
-        </tr>
-        <tr>
-          <td colspan="2"><a href="./users/friends" class="btn btn-success">Voir amis</a></td>
-        </tr>
-        <tr>
-          <td><a href="{{ route('users.edit', $user->id) }}"  class="btn btn-primary">Modifier</a></td>
-          <td><a href="{{ route('users.destroy', $user->id) }}" class="btn btn-danger">Supprimer</a></td>
-        </tr>
-      </table>
-
+    <div class="row">
+        <div class="col-sm-12">
+            <h2>User</h2>
+            <table class="table table-striped">
+                <tr>
+                    <td class="label">Name : </td>
+                    <td class="content">{{ $user->name }}</td>
+                </tr>
+                <tr>
+                    <td class="label">Email : </td>
+                    <td class="content">{{ $user->email }}</td>
+                </tr>
+            </table>
+            <br/>
+            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary">Edit</a></td>
+            <a href="{{ route('users.destroy', $user->id) }}" class="btn btn-danger">Delete</a></td>
+        </div>
     </div>
-  </div>
 </div>
 @endsection

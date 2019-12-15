@@ -24,8 +24,13 @@ Route::resource('tasks', 'TaskController');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/users/accepted_demand', 'UserController@acceptedDemand');
-Route::get('/users/delete_friend', 'UserController@deleteFriend');
+Route::get('/users/accept_demand/{friend_id}', 'UserController@acceptDemand')->name('acceptDemand');
+Route::get('/users/delete_friend/{friend_id}', 'UserController@deleteFriend')->name('deleteFriend');
+Route::get('/users/friends', 'UserController@friends')->name('friends');
+
+Route::resource('files', 'FileController');
+Route::resource('users', 'UserController');
+Route::resource('category', 'CategoryController');
 
 Route::get('/users/friends', 'UserController@friends');
 Route::get('users/friend/{user_id}', 'CategoryController@showUser');

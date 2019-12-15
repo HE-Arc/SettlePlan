@@ -59,6 +59,7 @@
                             </li>
 
                             <li class="nav-item">
+                            
                                 <a class="nav-link" href="{{ route('friends') }}"> Mes amis </a>
                             </li>
 
@@ -68,6 +69,8 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('friends') }}">Show Friends</a>
+                                    <a class="dropdown-item" href="{{ route('users.index') }}">Configuration User</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
