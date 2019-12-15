@@ -10,6 +10,7 @@ use App\Task;
 
 use Illuminate\Support\Facades\DB;
 
+
 class CategoryController extends Controller
 {
     /**
@@ -70,11 +71,12 @@ class CategoryController extends Controller
 
         $category = Category::all()->where('user_id', $userId)->where("id", $category_id);
 
+
         if(count($category) == 1)
         {
             $tasks = Task::all()->where("category_id", $category_id);
 
-            return view('category.detail', ['tasks' => $tasks , 'userName' => auth()->user()->name , 'newTask' => 0, 'categoryName' => $category]);
+            return view('category.detail', ['tasks' => $tasks , 'userName' => auth()->user()->name , 'newTask' => 0, 'categoryName' => $category, 'categoryId' => $category_id]);
         }
     }
 
