@@ -68,13 +68,13 @@ class CategoryController extends Controller
 
         // check if the user own the category
 
-        $category = Category::all()->where('user_id', $userId)->where("id", $category_id);
+        $category = Category::where('user_id', $userId)->where("id", $category_id)->get();
 
         if(count($category) == 1)
         {
-            $tasks = Task::all()->where("category_id", $category_id);
+            $tasks = Task::where("category_id", $category_id)->get();
 
-            return view('category.detail', ['tasks' => $tasks , 'userName' => auth()->user()->name , 'newTask' => 0, 'categoryName' => $category]);
+            return view('category.detail', ['tasks' => $tasks , 'userName' => auth()->user()->name , 'newTask' => 0, 'categoryName' => $category[0]->name]);
         }
     }
 
@@ -125,7 +125,7 @@ class CategoryController extends Controller
 
         $categories = Category::find($id)->where('user_id', $userId)->get();
 
-        return view('tasks.edit', ['task' => $task , 'categories' => $categories]);
+        return view('category.edit', ['task' => $task , 'categories' => $categories]);
     }
 
     /**
