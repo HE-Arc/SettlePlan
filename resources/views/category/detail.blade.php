@@ -6,6 +6,12 @@
         <div class="col-sm-12">
             <h2> Task of {{$categoryName}} from {{$userName}} : </h2>
 
+            @if($newTask == 1)
+                <div>
+                    <a style="margin-bottom:5px;" href="{{ route('tasks.create')}}" class="btn btn-primary">New Task</a>
+                </div>
+            @endif
+
             <table class="table table-striped">
                 <thead>
                     <tr>
