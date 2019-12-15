@@ -25,6 +25,18 @@
                 <a href="{{ route('category.show', $category->id)}}">{{$category->name}}</a>
             </td>
             <td>{{$category->private}}</td>
+
+            <td>
+                <a href="{{ route('category.edit',$category->id)}}" class="btn btn-primary">Edit</a>
+            </td>
+            <td>
+                <form action="{{ route('category.destroy', $category->id)}}" method="post">
+                  @csrf
+                  @method('DELETE')
+                  <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+            </td>
+
         </tr>
         @endforeach
     </tbody>

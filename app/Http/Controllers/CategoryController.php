@@ -19,8 +19,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categorys = Category::all()->where('user_id', auth()->user()->id);
-        return view('category.index', ['categorys' => $categorys, 'userName' => auth()->user()->name, 'newCat' => 1]);
+        $categorys = Category::where('user_id', auth()->user()->id)->get();
+        return view('category.index', ['categorys' => $categorys, 'userName' => auth()->user()->name]);
     }
 
     /**
@@ -103,11 +103,13 @@ class CategoryController extends Controller
         $temp = UserUser::where([['user_id',  auth()->user()->id], ['user_id1', $user_id]])->
         orWhere([['user_id', $user_id], ['user_id1',  auth()->user()->id]])->get();
 
-        if(count($temp) == 1)
+        if(count($temp) == 1)   // donc ami
         {
             $friend = User::find($user_id);
             $categoryName = Category::where(['id', $category_id])->where('private', 0)->get();
-            $tasks = Category::where(['category_id', $category_id])->get();
+            $tasks = Category::where(['category_id', $category_id]);
+
+            //dd($tasks)
 
             return view('category.detail', ['tasks' => $tasks , 'user' => $friend]);
         }
@@ -137,7 +139,17 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+          'name'=>'required',
+          'private'=>'required'
+        ]);
+
+        $category = Task::find($id);
+        $category->name = $request->get('name');
+        $category->private = $request->get('private');
+        $task->save();
+
+        return redirect('/$category')->with('success', 'Category updated!');
     }
 
     /**
@@ -148,6 +160,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $category = Category::where('id', $id)->where('user_id', auth()->user()->id);
+        $category->delete();
+
+        return redirect('/category')->with('success', 'Category deleted !');
     }
 }
