@@ -16,6 +16,11 @@ class File extends Model
          return $this->belongsToMany('App\Task');
      }
 
+     public function getPath()
+     {
+       return $this->attributes['path'];
+     }
+
      public function setPath($value)
      {
        $this->attributes['path'] = $value;

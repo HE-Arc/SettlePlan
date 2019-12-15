@@ -45,6 +45,7 @@
               @endif
             <td>{{$task->category->name}}</td>
 
+            <!-- A Modifier -->
             @if (!isset($files[$task->id]))
               <td></td>
             @else

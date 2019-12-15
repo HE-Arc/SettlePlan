@@ -24,7 +24,8 @@ Route::get('/users/accept_demand/{friend_id}', 'UserController@acceptDemand')->n
 Route::get('/users/delete_friend/{friend_id}', 'UserController@deleteFriend')->name('deleteFriend');
 Route::get('/users/friends', 'UserController@friends')->name('friends');
 
-Route::resource('files', 'FileController');
+Route::get('/tasks/deleteFile/{task_id}/{file_id}', 'TaskController@deleteFile')->name('deleteFile');
+
 Route::resource('users', 'UserController');
 Route::resource('category', 'CategoryController');
 

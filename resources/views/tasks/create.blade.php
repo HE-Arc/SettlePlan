@@ -1,5 +1,33 @@
 @extends('../layouts.app')
 
+<script type='text/javascript'>
+    var nbFileInput = 2;
+
+    function addFields() {
+        // Files <div> where dynamic content will be placed
+        var files = document.getElementById("files");
+        // Append a node with a random text
+        //container.appendChild(document.createTextNode("Member " + (i+1)));
+
+        var formGroup = document.createElement("div");
+        formGroup.className = "form-group";
+
+        var divDisp = document.createElement("div");
+        divDisp.className = "col-md-6";
+
+        // Create an <input> element, set its type and name attributes
+        var input = document.createElement("input");
+        input.type = "file";
+        input.name = "file" + nbFileInput;
+        input.className = "form-control-file";
+        nbFileInput++;
+
+        divDisp.appendChild(input)
+        formGroup.appendChild(divDisp);
+        files.appendChild(formGroup);
+    }
+</script>
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -42,9 +70,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="file">File : </label>
                             <div class="col-md-6">
-                              <input type="file" class="form-control" name="file"/>
+                                <input type="file" name="file" class="form-control-file" />
+                            </div>
+                        </div>
+
+                        <div id="files"></div>
+
+                        <div class="form-group">
+                            <div class="col-md-6">
+                                <a href="#" id="filldetails" onclick="addFields()" class="btn btn-light" >Add File</a>
                             </div>
                         </div>
 
