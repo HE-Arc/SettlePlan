@@ -29,13 +29,10 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $userId = auth()->user()->id;
-
-         //$tasks = Task::all();
-        DB::enableQueryLog();
+        /*$userId = auth()->user()->id;
         $tasks = Task::select('tasks.*')->with('category')
             ->join('categories', 'category_id', '=', 'categories.id')
-            ->where('categories.user_id' , $userId)->get();
+            ->where('categories.user_id' , $userId)->get();*/
 
         //dd($tasks[1]->files()->get());
 
@@ -104,7 +101,12 @@ class TaskController extends Controller
              $i++;
           }
 
+<<<<<<< HEAD
         return redirect('/tasks')->with('success', 'Task saved!');
+=======
+
+        return redirect("/category/". $task->category_id)->with('success', 'Task Created!');
+>>>>>>> 00b6e56642ca3615ca600b558efc5ccf6ff7521f
     }
 
     /**
@@ -179,7 +181,16 @@ class TaskController extends Controller
 
         $task->save();
 
-        return redirect('/tasks')->with('success', 'Task updated!');
+        if ($file = $request->file('file')) {
+             $path = Storage::putFile('file', $file);
+             $fileDB = new \App\File();
+             $fileDB->setPath($path);
+             $fileDB->save();
+
+             $task->files()->attach($fileDB->id);
+        }
+
+        return redirect('/category/'. $task->category_id)->with('success', 'Task updated!');
     }
 
     /**
@@ -191,6 +202,7 @@ class TaskController extends Controller
     public function destroy($id)
     {
         $task = Task::find($id);
+<<<<<<< HEAD
 
         $files = $task->files()->get();
 
@@ -201,9 +213,13 @@ class TaskController extends Controller
           $fileDB->delete();
         }
 
+=======
+        $categoryID = $task->category_id;
+>>>>>>> 00b6e56642ca3615ca600b558efc5ccf6ff7521f
         $task->delete();
 
-        return redirect('/tasks')->with('success', 'Task deleted!');
+        return redirect('/category/'. $categoryID)->with('success', 'Task deleted!');
+
     }
 
     public function deleteFile($task_id, $file_id)

@@ -130,6 +130,7 @@ class UserController extends Controller
 
       $friendsDemand = null;
       $friendsWait = null;
+      $friendsAccepted = null;
 
       $user = User::find(Auth::user()->id);
 
@@ -156,7 +157,7 @@ class UserController extends Controller
         $friendsAccepted[] = User::find($value->getUserIdWait());
       }
 
-
+      
       return view('users.friends', [
       'friendsDemand' => $friendsDemand,
       'friendsWait' => $friendsWait,

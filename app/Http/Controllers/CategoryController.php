@@ -10,6 +10,7 @@ use App\Task;
 
 use Illuminate\Support\Facades\DB;
 
+
 class CategoryController extends Controller
 {
     /**
@@ -70,11 +71,30 @@ class CategoryController extends Controller
 
         $category = Category::where('user_id', $userId)->where("id", $category_id)->get();
 
+
         if(count($category) == 1)
         {
             $tasks = Task::where("category_id", $category_id)->get();
 
-            return view('category.detail', ['tasks' => $tasks , 'userName' => auth()->user()->name , 'newTask' => 0, 'categoryName' => $category[0]->name]);
+            $user = auth()->user();
+
+            $files = null;
+
+            foreach ($tasks as $key => $value) {
+                $filesTask = $value->files()->get();
+                if(isset($filesTask[0]))
+                {
+                    $files[$value->id] = $filesTask[0]->path;
+                }
+            }
+
+            /*if ($user->can('update',$category[0])) {
+                dd('test');
+            } */
+            
+
+
+            return view('category.detail', ['tasks' => $tasks , 'userName' => auth()->user()->name , 'newTask' => 1, 'categoryName' => $category[0]->name,  'files' => $files]);
         }
     }
 
@@ -92,24 +112,34 @@ class CategoryController extends Controller
         if(count($temp) == 1)
         {
             $friend = User::find($user_id);
-            $categorys = Category::all()->where('user_id', $user_id);
+            $categorys = Category::where('user_id', $user_id)->where('private', 0)->get();
 
-            return view('category.index', ['categorys' => $categorys , 'userName' => $friend->name , 'newCat' => 0]);
+            return view('category.friend', ['categorys' => $categorys , 'user' => $friend]);
         }
+
     }
 
     public function showUserCategory($user_id, $category_id)
     {
         $temp = UserUser::where([['user_id',  auth()->user()->id], ['user_id1', $user_id]])->
         orWhere([['user_id', $user_id], ['user_id1',  auth()->user()->id]])->get();
-
         if(count($temp) == 1)
         {
             $friend = User::find($user_id);
-            $categoryName = Category::all()->where(['id', $category_id]);
-            $tasks = Category::all()->where(['category_id', $category_id]);
+            $categoryName = Category::where('id', $category_id)->where('private', 0)->get();
+            $tasks = Task::where('category_id', $category_id)->get();
+            $files = null;
 
-            //return view('task.index', ['categorys' => $categorys , 'userName' => $friend->name , 'newCat' => 0]);
+            foreach ($tasks as $key => $value) {
+                $filesTask = $value->files()->get();
+                if(isset($filesTask[0]))
+                {
+                    $files[$value->id] = $filesTask[0]->path;
+                }
+            }
+
+
+            return view('category.detail', ['tasks' => $tasks ,'files' => $files,  'newTask' => 0, 'userName' => $friend->name, 'categoryName' => $categoryName[0]->name , 'user' => $friend]);
         }
     }
 
