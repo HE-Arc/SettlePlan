@@ -24,7 +24,7 @@
         @foreach($categorys as $category)
         <tr>
             <td>
-                <a href="{{ route('tasks.index')}}">{{$category->name}}</a>
+                <a href="{{ route('category.show', $category->id)}}">{{$category->name}}</a>
             </td>
             <td>{{$category->private}}</td>
 
