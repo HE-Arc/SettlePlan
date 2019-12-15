@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Créer une tâche</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('tasks.store') }}">
+                    <form class="form-horizontal" method="POST" action="{{ route('tasks.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="name" class="col-md-4 control-label">Name</label>
@@ -38,6 +38,13 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="file">File : </label>
+                            <div class="col-md-6">
+                              <input type="file" class="form-control" name="file"/>
                             </div>
                         </div>
 

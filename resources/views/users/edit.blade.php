@@ -19,7 +19,7 @@
                 @method('PATH')
 
                 <div class="form-group">
-                    <label for="name">Nom</label>
+                    <label for="name">Name</label>
                     <input id="name" class="form-control" type="text" name="name" value="{{ $user->name }}" required autocomplete="name" autofocus />
                 </div>
 
@@ -28,6 +28,7 @@
                     <input id="email" class="form-control" type="email" name="email" value="{{ $user->email }}" required autocomplete="email" />
                 </div>
                 <button class="btn btn-primary" type="submit">Update</button>
+                <a href="{{ route('users.index') }}" class="btn btn-danger">Cancel</a>
             </form>
         </div>
     </div>

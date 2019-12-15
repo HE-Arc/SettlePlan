@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Task;
 use App\Category;
+//use App\File;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -27,15 +31,14 @@ class TaskController extends Controller
     {
         $userId = auth()->user()->id;
 
-        // $tasks = Task::all();
-        DB::enableQueryLog(); 
-         $tasks = Task::with('category')
+         //$tasks = Task::all();
+        DB::enableQueryLog();
+        $tasks = Task::select('tasks.*')->with('category')
             ->join('categories', 'category_id', '=', 'categories.id')
             ->where('categories.user_id' , $userId)->get();
 
-
-
-        //$tasks = Task::with('category')->where('user_id', $userId)->get(); 
+        //dd($tasks);
+        //$tasks = Task::with('category')->where('user_id', $userId)->get();
         return  view('tasks/index', ['tasks' => $tasks]);
     }
 
@@ -65,7 +68,7 @@ class TaskController extends Controller
           'name'=>'required',
           'description'=>'required',
           'category' => 'required',
-          'end_at' => 'nullable|date'
+          'end_at' => 'nullable|date',
         ]);
 
         $task = new Task([
@@ -76,6 +79,17 @@ class TaskController extends Controller
         ]);
 
         $task->save();
+
+         if ($file = $request->file('file')) {
+             $path = Storage::putFile('file', $file);
+             $fileDB = new \App\File();
+             $fileDB->setPath($path);
+             $fileDB->save();
+
+             $task->files()->attach($fileDB->id);
+          }
+
+
         return redirect('/tasks')->with('success', 'Task saved!');
     }
 
@@ -90,6 +104,11 @@ class TaskController extends Controller
         //
     }
 
+    /*public function show($id , $id2)
+    {
+        dd("test");
+    }*/
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -102,6 +121,7 @@ class TaskController extends Controller
 
         $categories = Category::where('user_id', $userId)->get();
         $task = Task::find($id);
+        //dd($task);
         return view('tasks.edit', ['task' => $task , 'categories' => $categories]);
     }
 

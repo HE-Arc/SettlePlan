@@ -17,10 +17,10 @@
                 @endforeach
             </ul>
         </div>
-        <br /> 
+        <br />
         @endif
-        <form method="post" action="{{ route('tasks.update', $task->id) }}">
-            @method('PATCH') 
+        <form method="post" action="{{ route('tasks.update', $task->id) }}" enctype="multipart/form-data">
+            @method('PATCH')
             @csrf
             <div class="form-group">
 
@@ -46,7 +46,7 @@
 
             </div>
 
-            
+
             <div class="form-group">
                 <label for="category">Category</label>
                 <div >
@@ -63,6 +63,10 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="file">File : </label>
+                <input type="file" class="form-control" name="file" id="file" />
+            </div>
 
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
@@ -71,13 +75,3 @@
 
 </div>
 @endsection
-
-
-
-
-
-
-
-
-
-
