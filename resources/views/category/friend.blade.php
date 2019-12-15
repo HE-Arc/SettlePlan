@@ -4,27 +4,20 @@
 <div class="container">
 <div class="row">
 <div class="col-sm-12">
-  <h2 > Categories of {{$userName}} : </h2>
-
-  <div>
-    <a style="margin-bottom:5px;" href="{{ route('category.create')}}" class="btn btn-primary">New category</a>
-  </div>
+  <h2 > Categories of {{$user->name}} : </h2>
 
   <table class="table table-striped">
     <thead>
         <tr>
           <td>Name</td>
-          <td>prive</td>
-          <td colspan = 2>Actions</td>
         </tr>
     </thead>
     <tbody>
         @foreach($categorys as $category)
         <tr>
             <td>
-                <a href="{{ route('category.show', $category->id)}}">{{$category->name}}</a>
+                <a href="{{ route('category.showUserCategory',['user_id' => $user->id, 'category_id' => $category->id])}}">{{$category->name}}</a>
             </td>
-            <td>{{$category->private}}</td>
         </tr>
         @endforeach
     </tbody>

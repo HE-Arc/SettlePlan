@@ -92,9 +92,9 @@ class CategoryController extends Controller
         if(count($temp) == 1)
         {
             $friend = User::find($user_id);
-            $categorys = Category::all()->where('user_id', $user_id);
+            $categorys = Category::where('user_id', $user_id)->where('private', 0)->get();
 
-            return view('category.index', ['categorys' => $categorys , 'userName' => $friend->name , 'newCat' => 0]);
+            return view('category.friend', ['categorys' => $categorys , 'user' => $friend]);
         }
     }
 
@@ -106,10 +106,10 @@ class CategoryController extends Controller
         if(count($temp) == 1)
         {
             $friend = User::find($user_id);
-            $categoryName = Category::all()->where(['id', $category_id]);
-            $tasks = Category::all()->where(['category_id', $category_id]);
+            $categoryName = Category::where(['id', $category_id])->where('private', 0)->get();
+            $tasks = Category::where(['category_id', $category_id])->get();
 
-            //return view('task.index', ['categorys' => $categorys , 'userName' => $friend->name , 'newCat' => 0]);
+            return view('category.detail', ['tasks' => $tasks , 'user' => $friend]);
         }
     }
 
