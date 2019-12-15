@@ -37,15 +37,16 @@
                         <td>{{date('d/m/y', strtotime($task->end_at))}}</td>
                         @endif
                         <td>{{$task->category->name}}</td>
+    
+
+                        @if (!isset($files[$task->id]))
+                            <td></td>
+                        @else
+                            <td><a href="../storage/app/{{ $files[$task->id] }}">File</a></td>
+                        @endif
                         <td>
                             <a href="{{ route('tasks.edit', $task->id)}}" class="btn btn-primary">Edit</a>
                         </td>
-
-                        @if (!isset($files[$task->id]))
-                        <td></td>
-                        @else
-                        <td><a href="../storage/app/{{ $files[$task->id] }}">File</a></td>
-                        @endif
                         <td>
                             <form action="{{ route('tasks.destroy', $task->id)}}" method="post">
                                 @csrf

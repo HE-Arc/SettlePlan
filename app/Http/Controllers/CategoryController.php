@@ -127,7 +127,18 @@ class CategoryController extends Controller
             $friend = User::find($user_id);
             $categoryName = Category::where('id', $category_id)->where('private', 0)->get();
             $tasks = Task::where('category_id', $category_id)->get();
-            return view('category.detail', ['tasks' => $tasks , 'newTask' => 0, 'userName' => $friend->name, 'categoryName' => $categoryName[0]->name , 'user' => $friend]);
+            $files = null;
+
+            foreach ($tasks as $key => $value) {
+                $filesTask = $value->files()->get();
+                if(isset($filesTask[0]))
+                {
+                    $files[$value->id] = $filesTask[0]->path;
+                }
+            }
+
+
+            return view('category.detail', ['tasks' => $tasks ,'files' => $files,  'newTask' => 0, 'userName' => $friend->name, 'categoryName' => $categoryName[0]->name , 'user' => $friend]);
         }
     }
 
