@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Task;
 use App\Category;
+//use App\File;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -28,13 +32,13 @@ class TaskController extends Controller
         $userId = auth()->user()->id;
 
          //$tasks = Task::all();
-        DB::enableQueryLog(); 
+        DB::enableQueryLog();
         $tasks = Task::select('tasks.*')->with('category')
             ->join('categories', 'category_id', '=', 'categories.id')
             ->where('categories.user_id' , $userId)->get();
 
         //dd($tasks);
-        //$tasks = Task::with('category')->where('user_id', $userId)->get(); 
+        //$tasks = Task::with('category')->where('user_id', $userId)->get();
         return  view('tasks/index', ['tasks' => $tasks]);
     }
 
@@ -64,7 +68,8 @@ class TaskController extends Controller
           'name'=>'required',
           'description'=>'required',
           'category' => 'required',
-          'end_at' => 'nullable|date'
+          'end_at' => 'nullable|date',
+          //'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         $task = new Task([
@@ -73,6 +78,26 @@ class TaskController extends Controller
           'end_at' => $request->get('end_at'),
           'category_id' => $request->get('category'),
         ]);
+
+         if ($files = $request->file('file')) {
+
+              dd($files);
+
+             $destinationPath = 'public/file/'; // upload path
+             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
+             $files->move($destinationPath, $profileImage);
+             $insert['file'] = "$profileImage";
+
+             //$check = Image::insertGetId($insert);
+
+             dd($files);
+             $file->store('files');
+             //$path = Storage::putFile('files', new \Illuminate\Http\File($request->file));
+             $file = new File(['path' => $path]);
+             $file->save();
+
+             $task->files()->attach($file->id);
+          }
 
         $task->save();
         return redirect('/tasks')->with('success', 'Task saved!');

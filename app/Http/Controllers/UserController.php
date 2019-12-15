@@ -19,8 +19,6 @@ class UserController extends Controller
      */
     public function index()
     {
-      //TODO
-      //dd(Auth::user());
       return $this->show(Auth::user()->id);
     }
 
@@ -59,7 +57,7 @@ class UserController extends Controller
           return $this->friends();
         }
       }
-      
+
       $user->users()->attach($friend->id);
 
       $user->save();
@@ -89,12 +87,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-      //TODO
-      //dd(Auth::user());
       $user = User::find($id);
-
-      //dd($users);
-
       return view('users.edit', [
       'user' => $user
       ]);
