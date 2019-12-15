@@ -68,7 +68,6 @@ class TaskController extends Controller
           'description'=>'required',
           'category' => 'required',
           'end_at' => 'nullable|date',
-          //'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
         $task = new Task([
@@ -78,27 +77,18 @@ class TaskController extends Controller
           'category_id' => $request->get('category'),
         ]);
 
-         if ($files = $request->file('file')) {
+        $task->save();
 
-              dd($files);
+         if ($file = $request->file('file')) {
+             $path = Storage::putFile('file', $file);
+             $fileDB = new \App\File();
+             $fileDB->setPath($path);
+             $fileDB->save();
 
-             $destinationPath = 'public/file/'; // upload path
-             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
-             $files->move($destinationPath, $profileImage);
-             $insert['file'] = "$profileImage";
-
-             //$check = Image::insertGetId($insert);
-
-             dd($files);
-             $file->store('files');
-             //$path = Storage::putFile('files', new \Illuminate\Http\File($request->file));
-             $file = new File(['path' => $path]);
-             $file->save();
-
-             $task->files()->attach($file->id);
+             $task->files()->attach($fileDB->id);
           }
 
-        $task->save();
+
         return redirect('/tasks')->with('success', 'Task saved!');
     }
 

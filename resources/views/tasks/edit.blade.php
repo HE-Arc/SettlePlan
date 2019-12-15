@@ -19,7 +19,7 @@
         </div>
         <br />
         @endif
-        <form method="post" action="{{ route('tasks.update', $task->id) }}">
+        <form method="post" action="{{ route('tasks.update', $task->id) }}" enctype="multipart/form-data">
             @method('PATCH')
             @csrf
             <div class="form-group">
