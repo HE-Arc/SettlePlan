@@ -25,7 +25,7 @@ Route::resource('files', 'FileController');
 Route::resource('users', 'UserController');
 Route::resource('category', 'CategoryController');
 Route::get('users/friend/{user_id}', 'CategoryController@showUser')->name('user.friends');
-Route::get('users/friend/{user_id}/{category_id}', 'CategoryController@showUserCategory');
+Route::get('users/friend/{user_id}/{category_id}', 'CategoryController@showUserCategory')->name('category.showUserCategory');;
 Route::resource('tasks', 'TaskController')->except('index');
 
 
