@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableTasksHasFiles extends Migration
+class ChangeNameTableTaskFile extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,9 @@ class CreateTableTasksHasFiles extends Migration
      */
     public function up()
     {
-        Schema::create('tasks_has_files', function (Blueprint $table) {
+        Schema::dropIfExists('tasks_has_files');
+
+        Schema::create('file_task', function (Blueprint $table) {
     			$table->bigInteger('task_id')->unsigned();
     			$table->bigInteger('file_id')->unsigned();
           $table->primary(['task_id', 'file_id']);
@@ -29,6 +31,6 @@ class CreateTableTasksHasFiles extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tasks_has_files');
+        Schema::dropIfExists('file_task');
     }
 }
