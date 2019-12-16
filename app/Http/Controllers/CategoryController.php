@@ -71,13 +71,33 @@ class CategoryController extends Controller
      */
     public function show($category_id)
     {
-        $userId = auth()->user()->id;
+        $user = auth()->user();
 
         // check if the user own the category
+        //$category = Category::where('user_id', $user->id)->where("id", $category_id)->get();
+        $category = Category::where("id", $category_id)->get();
 
-        $category = Category::where('user_id', $userId)->where("id", $category_id)->get();
 
-        if(count($category) == 1)
+
+        if ($user->can('crud', $category[0]) ) {
+        
+            $tasks = Task::where("category_id", $category_id)->orderByRaw('end_at', 'DESC')->get();
+            $files = null;
+            foreach ($tasks as $key => $value) {
+                $filesTask = $value->files()->get();
+                if(isset($filesTask[0]))
+                {
+                    $files[$value->id] = $filesTask;
+                }
+            }
+            return view('categories.detail', ['tasks' => $tasks , 'user' => $user , 'newTask' => 1, 'category' => $category[0],  'files' => $files]);
+        } 
+        else
+        {
+            return redirect()->route('home');
+        }
+
+        /*if(count($category) == 1)
         {
             $tasks = Task::where("category_id", $category_id)->orderByRaw('end_at', 'DESC')->get();
 
@@ -94,7 +114,7 @@ class CategoryController extends Controller
             }
 
             return view('categories.detail', ['tasks' => $tasks , 'user' => $user , 'newTask' => 1, 'category' => $category[0],  'files' => $files]);
-        }
+        }*/
     }
 
     /**

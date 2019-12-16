@@ -43,6 +43,8 @@ class TaskController extends Controller
           }
         }
 
+        
+
         //dd($tasks);
         //$tasks = Task::with('category')->where('user_id', $userId)->get();
         return  view('tasks/index', ['tasks' => $tasks, 'files' => $files]);
@@ -95,7 +97,10 @@ class TaskController extends Controller
 
         $task->save();
 
+        $files = null;
+
         $files = $request->file('files');
+
 
         foreach ($files as $file)
         {
@@ -174,7 +179,7 @@ class TaskController extends Controller
         $task->category_id = $request->get('category');
 
 
-        /*$files = $request->file('files');
+        $files = $request->file('files');
 
         foreach ($files as $file)
         {
@@ -185,7 +190,7 @@ class TaskController extends Controller
            $fileDB->save();
 
            $task->files()->attach($fileDB->id);
-       }*/
+       }
 
         $task->save();
         return redirect('/categories/'. $task->category_id)->with('success', 'Task updated!');

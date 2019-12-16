@@ -9,6 +9,7 @@
 
   <div class="col-sm-12">
   <h2> Tasks : </h2>
+
   <table class="table table-striped">
     <thead>
         <tr>
