@@ -29,34 +29,35 @@
                             <td>{{$task->name}}</td>
 
                             <td style="word-break: break-word;">{{$task->description}}</td>
+                               
+                            @if (empty($task->end_at))
+                                <td></td>
+                            @else
+                                <td>{{date('d/m/y', strtotime($task->end_at))}}</td>
+                            @endif
+
+                            <!-- A Modifier -->
                             <td>
-                                @if (empty($task->end_at))
-                                    {{date('d/m/y', strtotime($task->end_at))}}
+                                @if (isset($files[$task->id]))
+                                        @foreach($files[$task->id] as $file)
+                                            <p>
+                                                <a href="{{   route('download',  ['category_id' => $task->category->id, 'task_id' => $task->id,  'file_id' => $file->id ] ) }}">{{ $file->name}}</a>
+                                            </p>
+                                        @endforeach
                                 @endif
-                                </td>
+                            </td>
 
-                                <!-- A Modifier -->
-                                <td>
-                                    @if (isset($files[$task->id]))
-                                            @foreach($files[$task->id] as $file)
-                                                <p>
-                                                    <a href="{{   route('download',  ['category_id' => $task->category->id, 'task_id' => $task->id,  'file_id' => $file->id ] ) }}">{{ $file->name}}</a>
-                                                </p>
-                                            @endforeach
-                                    @endif
-                                </td>
-
-                                <td>
-                                    <a href="{{ route('tasks.edit', $task->id)}}" class="btn btn-primary">Edit</a>
-                                </td>
-                                <td>
-                                    <form action="{{ route('tasks.destroy', $task->id)}}" method="post">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-danger" type="submit">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
+                            <td>
+                                <a href="{{ route('tasks.edit', $task->id)}}" class="btn btn-primary">Edit</a>
+                            </td>
+                            <td>
+                                <form action="{{ route('tasks.destroy', $task->id)}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger" type="submit">Delete</button>
+                                </form>
+                            </td>
+                          </tr>
                         @endforeach
                     </tbody>
                 </table>
