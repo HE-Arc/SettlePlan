@@ -89,7 +89,7 @@ class CategoryController extends Controller
                 }
             }
 
-            return view('categories.detail', ['tasks' => $tasks , 'user' => $user , 'newTask' => 1, 'category' => $category[0],  'files' => $files]);
+            return view('categories.detail', ['tasks' => $tasks , 'user' => $user , 'newTask' => 1, 'category' => $category,  'files' => $files]);
         } 
        
         return redirect()->route('home');

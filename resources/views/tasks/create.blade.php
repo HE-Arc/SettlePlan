@@ -64,7 +64,18 @@
                             <div class="col-md-6">
                                 <select class="form-control" name="category">
                                     @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+
+                                    @if(isset($selectedCategory))
+                                        @if ($category->id == $selectedCategory)
+                                            <option value="{{ $category->id }}" selected="selected">{{ $category->name }}</option>
+                                        @else
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endif
+                                    @else
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endif
+
+                                            
                                     @endforeach
                                 </select>
                             </div>
