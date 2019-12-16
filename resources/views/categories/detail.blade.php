@@ -45,12 +45,8 @@
                             </p>
                         @endforeach
                         </td>
-<<<<<<< HEAD
-
-=======
                         @endif
                       
->>>>>>> b1ed2d5643ef63ce2fd258c6979fb90ed8194612
                         @can('crud', $task->category)
                         <td>
                             <a href="{{ route('tasks.edit', $task->id)}}" class="btn btn-primary">Edit</a>
