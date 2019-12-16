@@ -1,30 +1,5 @@
 @extends('../layouts.app')
 
-<script type='text/javascript'>
-    var nbFileInput = 1;
-
-    function addFields()
-    {
-        // Files <div> where dynamic content will be placed
-        var files = document.getElementById("files");
-        // Append a node with a random text
-        //container.appendChild(document.createTextNode("Member " + (i+1)));
-
-        var formGroup = document.createElement("div");
-        formGroup.className = "form-group";
-
-        // Create an <input> element, set its type and name attributes
-        var input = document.createElement("input");
-        input.type = "file";
-        input.name = "file" + nbFileInput;
-        input.className = "form-control-file";
-        nbFileInput++;
-
-        formGroup.appendChild(input);
-        files.appendChild(formGroup);
-    }
-</script>
-
 @section('content')
 <div class="container">
     <div class="row">

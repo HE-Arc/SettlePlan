@@ -1,34 +1,5 @@
 @extends('../layouts.app')
 
-<script type='text/javascript'>
-    var nbFileInput = 1;
-
-    function addFields()
-    {
-        // Files <div> where dynamic content will be placed
-        var files = document.getElementById("files");
-        // Append a node with a random text
-        //container.appendChild(document.createTextNode("Member " + (i+1)));
-
-        var formGroup = document.createElement("div");
-        formGroup.className = "form-group";
-
-        var divDisp = document.createElement("div");
-        divDisp.className = "col-md-6";
-
-        // Create an <input> element, set its type and name attributes
-        var input = document.createElement("input");
-        input.type = "file";
-        input.name = "file" + nbFileInput;
-        input.className = "form-control-file";
-        nbFileInput++;
-
-        divDisp.appendChild(input)
-        formGroup.appendChild(divDisp);
-        files.appendChild(formGroup);
-    }
-</script>
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -78,12 +49,6 @@
                             </div>
                             @endforeach
                         @endif
-
-                        <div class="form-group">
-                            <div class="col-md-6">
-                                <input type="file" name="files[]" class="form-control-file" multiple />
-                            </div>
-                        </div>
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
