@@ -28,25 +28,19 @@
                     <tr>
                         <td>{{$task->name}}</td>
                         <td style="word-break: break-word;">{{$task->description}}</td>
+
                         @if (empty($task->end_at))
-                        <td></td>
+                            <td></td>
                         @else
-                        <td>{{date('d/m/y', strtotime($task->end_at))}}</td>
+                            <td>{{date('d/m/y', strtotime($task->end_at))}}</td>
                         @endif
 
-
-                        @if (!isset($files[$task->id]))
-                        <td></td>
-                        @else
                         <td>
-                        @foreach($files[$task->id] as $file)
-                            <p>
-                            <a href="{{   route('download',  ['category_id' => $category->id, 'task_id' => $task->id,  'file_id' => $file->id ] ) }}">{{ $file->name}}</a>
-                            </p>
-                        @endforeach
+                            @if (isset($files[$task->id]))
+                                <a href="{{   route('download',  ['category_id' => $category->id, 'task_id' => $task->id,  'file_id' => $files[$task->id][0]]) }}">File</a>
+                            @endif
                         </td>
-                        @endif
-                      
+
                         @can('crud', $task->category)
                         <td>
                             <a href="{{ route('tasks.edit', $task->id)}}" class="btn btn-primary">Edit</a>
@@ -56,7 +50,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <button class="btn btn-danger" type="submit">Delete</button>
-                            </form>
+                             </form>
                         </td>
                         @else
                         <td>

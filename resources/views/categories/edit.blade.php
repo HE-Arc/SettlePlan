@@ -19,7 +19,6 @@
             <form method="post" action="{{ route('categories.update', $category->id) }}" enctype="multipart/form-data">
                 @method('PATCH')
                 @csrf
-
                 <table>
                     <td width="80%">
                         <div class="form-group">
@@ -46,7 +45,6 @@
                          </button>
                      </div>
                  </div>
-
             </form>
         </div>
     </div>

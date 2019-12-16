@@ -12,13 +12,11 @@ use App\UserUser;
 
 class UserController extends Controller
 {
-
-  
     public function __construct()
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -30,16 +28,6 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -47,35 +35,36 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-      $user = User::find(Auth::user()->id);
-      $email = $request->input('email');
-      $friend = User::all()->where('email', $email)->first();
+        $user = User::find(Auth::user()->id);
+        $email = $request->input('email');
+        $friend = User::all()->where('email', $email)->first();
 
-      if($friend != null)
-      {
-        foreach ($user->users()->get() as $value) {
-          if($value->id == $friend->id)
-          {
-            return redirect()->route('friends')->with('unsuccess','Demand did\'t send !');
-          }
+        if($friend == null)
+        {
+            return redirect()->route('friends')->with('unsuccess','Friend dosen\'t exist !');
         }
 
-        foreach ($friend->users()->get() as $value) {
-          if($value->id == $user->id)
-          {
-            return redirect()->route('friends')->with('unsuccess','Demand did\'t send !');
-          }
+        foreach ($user->users()->get() as $value)
+        {
+            if($value->id == $friend->id)
+            {
+                return redirect()->route('friends')->with('unsuccess','Demand did\'t send !');
+            }
         }
-      }
-      else {
-        return redirect()->route('friends')->with('unsuccess','Friend dosen\'t exist !');
-      }
 
-      $user->users()->attach($friend->id);
+        foreach ($friend->users()->get() as $value)
+        {
+            if($value->id == $user->id)
+            {
+                return redirect()->route('friends')->with('unsuccess','Demand did\'t send !');
+            }
+        }
 
-      $user->save();
+        $user->users()->attach($friend->id);
 
-      return redirect()->route('friends')->with('success','Friend updated successfully !');
+        $user->save();
+
+        return redirect()->route('friends')->with('success','Friend updated successfully !');
     }
 
     /**
@@ -86,10 +75,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-      $user = User::find($id);
-      return view('user.index', [
-      'user' => $user
-      ]);
+        $user = User::find($id);
+        return view('user.index', ['user' => $user]);
     }
 
     /**
@@ -100,10 +87,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-      $user = User::find($id);
-      return view('user.edit', [
-      'user' => $user
-      ]);
+        $user = User::find($id);
+        return view('user.edit', ['user' => $user]);
     }
 
     /**
@@ -115,7 +100,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $request->validate([
+        $request->validate([
             'name' => 'required',
             'email' => 'required',
         ]);
@@ -140,46 +125,59 @@ class UserController extends Controller
         return redirect('/')->with('success', 'Account deleted !');
     }
 
-
+    /**
+     * Display a listing of the friend of the logged user.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function friends()
     {
-      $friendsDemand = null;
-      $friendsWait = null;
-      $friendsAccepted = null;
+        $friendsDemand = null;
+        $friendsWait = null;
+        $friendsAccepted = null;
 
-      $user = User::find(Auth::user()->id);
+        $user = User::find(Auth::user()->id);
 
-      $friendsDemandID = UserUser::where(['user_id' => $user->id, 'status' => 0])->get();
+        $friendsDemandID = UserUser::where(['user_id' => $user->id, 'status' => 0])->get();
 
-      foreach ($friendsDemandID as $value) {
-        $friendsDemand[] = User::find($value->getUserIdDemand());
-      }
+        foreach ($friendsDemandID as $value)
+        {
+            $friendsDemand[] = User::find($value->getUserIdDemand());
+        }
 
-      $friendsWaitID = UserUser::where(['user_id1' => $user->id, 'status' => 0])->get();
+        $friendsWaitID = UserUser::where(['user_id1' => $user->id, 'status' => 0])->get();
 
-      foreach ($friendsWaitID as $value) {
-        $friendsWait[] = User::find($value->getUserIdWait());
-      }
+        foreach ($friendsWaitID as $value)
+        {
+            $friendsWait[] = User::find($value->getUserIdWait());
+        }
 
-      $friendsAcceptedID1 = UserUser::where(['user_id' => $user->id, 'status' => 1])->get();
-      $friendsAcceptedID2 = UserUser::where(['user_id1' => $user->id, 'status' => 1])->get();
+        $friendsAcceptedID1 = UserUser::where(['user_id' => $user->id, 'status' => 1])->get();
+        $friendsAcceptedID2 = UserUser::where(['user_id1' => $user->id, 'status' => 1])->get();
 
-      foreach ($friendsAcceptedID1 as $value) {
-        $friendsAccepted[] = User::find($value->getUserIdDemand());
-      }
+        foreach ($friendsAcceptedID1 as $value)
+        {
+            $friendsAccepted[] = User::find($value->getUserIdDemand());
+        }
 
-      foreach ($friendsAcceptedID2 as $value) {
-        $friendsAccepted[] = User::find($value->getUserIdWait());
-      }
+        foreach ($friendsAcceptedID2 as $value)
+        {
+            $friendsAccepted[] = User::find($value->getUserIdWait());
+        }
 
-
-      return view('user.friends', [
-      'friendsDemand' => $friendsDemand,
-      'friendsWait' => $friendsWait,
-      'friendsAccepted' => $friendsAccepted,
-      ]);
+        return view('user.friends', [
+            'friendsDemand' => $friendsDemand,
+            'friendsWait' => $friendsWait,
+            'friendsAccepted' => $friendsAccepted,
+            ]);
     }
 
+    /**
+     * Remove the specified link between the specified ressource and the logged user from storage.
+     *
+     * @param  int  $friend_id
+     * @return \Illuminate\Http\Response
+     */
     public function deleteFriend($friend_id)
     {
         $user = User::find(Auth::user()->id);
@@ -188,23 +186,29 @@ class UserController extends Controller
 
         if ($result == 0)
         {
-          $result = UserUser::where(['user_id1' => $user->id, 'user_id' =>$friend_id])->delete();
+            $result = UserUser::where(['user_id1' => $user->id, 'user_id' =>$friend_id])->delete();
 
-          if ($result == 0)
-          {
-            return redirect()->route('friends')->with('unsuccess','Friend didn\'t delete !');
-          }
+            if ($result == 0)
+            {
+                return redirect()->route('friends')->with('unsuccess','Friend didn\'t delete !');
+            }
         }
 
         return redirect()->route('friends')->with('success','Friend deleted successfully !');
     }
 
+    /**
+     * Update the specified link between the specified ressource and the logged user from storage.
+     *
+     * @param  int  $friend_id
+     * @return \Illuminate\Http\Response
+     */
     public function acceptDemand($friend_id)
     {
-      $user = User::find(Auth::user()->id);
+        $user = User::find(Auth::user()->id);
 
-      $friendRel = UserUser::where(['user_id' => $friend_id, 'user_id1' => $user->id])->update(['status' => 1]);
+        $friendRel = UserUser::where(['user_id' => $friend_id, 'user_id1' => $user->id])->update(['status' => 1]);
 
-      return redirect()->route('friends')->with('success','Demand accepted successfully !');
+        return redirect()->route('friends')->with('success','Demand accepted successfully !');
     }
 }
