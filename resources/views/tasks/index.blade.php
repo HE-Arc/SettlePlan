@@ -23,7 +23,11 @@
     <tbody>
         @foreach($tasks as $task)
         <tr>
-            <td>{{$task->category->name}}</td>
+
+            <td>
+                <a href="{{ route('categories.show', $task->category->id)}}">{{$task->category->name}}</a>
+            </td>
+
             <td>{{$task->name}}</td>
             <td style="word-break: break-word;">{{$task->description}}</td>
               @if (empty($task->end_at))

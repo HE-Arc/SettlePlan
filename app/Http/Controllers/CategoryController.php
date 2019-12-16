@@ -8,8 +8,6 @@ use App\User;
 use App\UserUser;
 use App\Task;
 
-use Illuminate\Database\Eloquent\Builder;
-
 use Illuminate\Support\Facades\DB;
 
 
@@ -83,7 +81,7 @@ class CategoryController extends Controller
 
         if(count($category) == 1)
         {
-            $tasks = Task::where("category_id", $category_id)->get();
+            $tasks = Task::where("category_id", $category_id)->orderByRaw('end_at', 'DESC')->get();
 
             $user = auth()->user();
 
@@ -93,8 +91,8 @@ class CategoryController extends Controller
                 $filesTask = $value->files()->get();
                 if(isset($filesTask[0]))
                 {
-                $files[$value->id] = $filesTask;
-                 }
+                    $files[$value->id] = $filesTask;
+                }
             }
 
             /*if ($user->can('update',$category[0])) {
@@ -166,9 +164,7 @@ class CategoryController extends Controller
             return view('categories.edit', ['category' => $category[0]]);
 
         } 
-
         return redirect("home");
-
     }
 
     /**
