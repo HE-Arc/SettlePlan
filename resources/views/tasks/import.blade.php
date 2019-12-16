@@ -41,7 +41,7 @@
                         <div class="form-group">
                             <label for="name" class="col-md-4 control-label">Name</label>
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" required autofocus value="{{ $import->name }}">
+                                <input id="name" type="text" class="form-control" name="name" required autofocus value="{{ $task->name }}">
                             </div>
                         </div>
 
@@ -49,7 +49,7 @@
                             <label for="description" class="col-md-4 control-label">Description</label>
                             <div class="col-md-6">
                                 <textarea id="description" required name="description" class="form-control" rows="3">
-                                    {{ $import->description }}
+                                    {{ $task->description }}
                                 </textarea>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                         <div class="form-group">
                             <label for="end_at" class="col-md-4 control-label">Due date : </label>
                             <div class="col-md-6">
-                                <input id="end_at" type="date" class="form-control" name="end_at" value="{{ $import->end_at }}">
+                                <input id="end_at" type="date" class="form-control" name="end_at" value="{{ $task->end_at }}">
                             </div>
                         </div>
 
@@ -71,6 +71,15 @@
                                 </select>
                             </div>
                         </div>
+
+                        @if ($files->isNotEmpty())
+                            @foreach ($files as $key => $file)
+                            <div class="form-group">
+                                <label>{{ $file->name }}</label>
+                                <a href="{{ route('deleteFile', ['task_id' => $task->id, 'file_id' => $file->id]) }}" class="btn btn-danger">Delete</a>
+                            </div>
+                            @endforeach
+                        @endif
 
                         <div class="form-group">
                             <div class="col-md-6">

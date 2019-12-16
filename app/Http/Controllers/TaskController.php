@@ -68,12 +68,13 @@ class TaskController extends Controller
       */
      public function import($task_id)
      {
-         $task = Task::where('id', $task_id)->get();
+         $task = Task::find($task_id);
+          $files = $task->files()->get();
          $userId = auth()->user()->id;
 
          $categories = Category::where('user_id', $userId)->get();
 
-         return  view('tasks/import', ['categories' => $categories, 'import' => $task[0]]);
+         return  view('tasks/import', ['categories' => $categories, 'task' => $task, 'files' => $files]);
      }
 
     /**
@@ -98,21 +99,27 @@ class TaskController extends Controller
           'category_id' => $request->get('category'),
         ]);
 
-        $task->save();
         $files = null;
+
         $files = $request->file('files');
 
-
-        foreach ($files as $file)
+        if($files != null)
         {
-           $path = Storage::putFile('file', $file);
-           $fileDB = new \App\File();
-           $fileDB->path = $path;
-           $fileDB->name = $file->getClientOriginalName();
-           $fileDB->save();
+          foreach ($files as $file)
+          {
+            $path = Storage::putFile('file', $file);
+            $fileDB = new \App\File();
+            $fileDB->path = $path;
+            $fileDB->name = $file->getClientOriginalName();
+            $fileDB->save();
 
-           $task->files()->attach($fileDB->id);
+            $task->files()->attach($fileDB->id);
+          }
         }
+
+        $task->save();
+
+
 
         return redirect("/categories/". $task->category_id)->with('success', 'Task Created!');
     }
@@ -164,18 +171,22 @@ class TaskController extends Controller
         $task->end_at = $request->get('end_at');
         $task->category_id = $request->get('category');
 
-
+        $files = null;
         $files = $request->file('files');
 
-        foreach ($files as $file)
+        
+        if($files != null)
         {
-           $path = Storage::putFile('file', $file);
-           $fileDB = new \App\File();
-           $fileDB->path = $path;
-           $fileDB->name = $file->getClientOriginalName();
-           $fileDB->save();
+          foreach ($files as $file)
+          {
+            $path = Storage::putFile('file', $file);
+            $fileDB = new \App\File();
+            $fileDB->path = $path;
+            $fileDB->name = $file->getClientOriginalName();
+            $fileDB->save();
 
-           $task->files()->attach($fileDB->id);
+            $task->files()->attach($fileDB->id);
+          }
         }
 
         $task->save();

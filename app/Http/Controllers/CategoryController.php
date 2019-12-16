@@ -77,7 +77,7 @@ class CategoryController extends Controller
         //$category = Category::where('user_id', $user->id)->where("id", $category_id)->get();
         $category = Category::where("id", $category_id)->get();
 
-
+        
 
         if ($user->can('crud', $category[0]) ) {
         
