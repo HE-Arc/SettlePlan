@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container">
-<div class="row">
-<div class="col-sm-12">
-  <h2 > Categories of {{$userName}} : </h2>
+    <div class="row">
+        <div class="col-sm-12">
+            <h2> Categories of {{$userName}} : </h2>
 
   @if(session()->get('success'))
     <div class="alert alert-success">
