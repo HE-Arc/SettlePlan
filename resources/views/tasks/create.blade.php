@@ -73,7 +73,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6">
-                                <a href="#" id="filldetails" onclick="addFields()" class="btn btn-light" >Add File</a>
+                                <a href="#" id="filldetails" onclick="addFields()" class="btn btn-secondary" >Add File</a>
                             </div>
                         </div>
 

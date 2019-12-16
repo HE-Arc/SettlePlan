@@ -76,7 +76,7 @@ class CategoryController extends Controller
 
         if(count($category) == 1)
         {
-            $tasks = Task::where("category_id", $category_id)->get();
+            $tasks = Task::where("category_id", $category_id)->orderByRaw('end_at', 'DESC')->get();
 
             $user = auth()->user();
 
@@ -88,19 +88,10 @@ class CategoryController extends Controller
                 {
                     $files[$value->id][0] = $filesTask[0]->id;
                     $files[$value->id][1] = $filesTask[0]->path;
-
                 }
             }
 
-
-
-            /*if ($user->can('update',$category[0])) {
-                dd('test');
-            } */
-
-
-
-            return view('category.detail', ['tasks' => $tasks , 'user' => $user , 'newTask' => 1, 'category' => $category[0],  'files' => $files]);
+            return view('categories.detail', ['tasks' => $tasks , 'user' => $user , 'newTask' => 1, 'category' => $category[0],  'files' => $files]);
         }
     }
 
