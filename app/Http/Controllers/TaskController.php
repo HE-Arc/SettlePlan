@@ -63,13 +63,12 @@ class TaskController extends Controller
      /**
       * Display the specified resource for the category and the user concerned by the parameters.
       *
-      * @param  int  $user_id : Id of the user
-      * @param  int  $category_id : Id of the category
+      * @param  int  $task_id
       * @return \Illuminate\Http\Response
       */
-     public function import($id)
+     public function import($task_id)
      {
-         $task = Task::find($id)->get();
+         $task = Task::where('id', $task_id)->get();
          $userId = auth()->user()->id;
 
          $categories = Category::where('user_id', $userId)->get();
