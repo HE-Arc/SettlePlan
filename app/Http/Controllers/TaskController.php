@@ -39,10 +39,10 @@ class TaskController extends Controller
           $filesTask = $value->files()->get();
           if(isset($filesTask[0]))
           {
-            $files[$value->id] = $filesTask[0]->path;
+            $files[$value->id] = $filesTask;
           }
         }
-        //dd($files);
+
         //dd($tasks);
         //$tasks = Task::with('category')->where('user_id', $userId)->get();
         return  view('tasks/index', ['tasks' => $tasks, 'files' => $files]);
@@ -135,20 +135,21 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        $userId = auth()->user()->id;
+        $user = auth()->user();
 
-        $categories = Category::where('user_id', $userId)->get();
+        $categories = Category::where('user_id', $user->id)->get();
+
         $task = Task::with('category')->find($id);
-        $files = $task->files()->get();
+        
 
-        if($task->category->user_id === $userId)
-        {
-            return view('tasks.edit', ['task' => $task , 'categories' => $categories,  'files' => $files]);
-        }
-        else
-        {
-            return redirect()->action('HomeController@index');
-        }
+        $files = $task->files()->get();
+          
+        if ($user->can('crud',$task->category)) {
+          dd('test');
+          return view('tasks.edit', ['task' => $task , 'categories' => $categories,  'files' => $files]);
+        } 
+
+        return redirect("home");
     }
 
     /**
@@ -189,6 +190,7 @@ class TaskController extends Controller
 
         $task->save();
         return redirect('/categories/'. $task->category_id)->with('success', 'Task updated!');
+
     }
 
     /**

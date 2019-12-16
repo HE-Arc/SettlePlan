@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
+
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -82,8 +89,7 @@ class CategoryController extends Controller
                 $filesTask = $value->files()->get();
                 if(isset($filesTask[0]))
                 {
-                    $files[$value->id][0] = $filesTask[0]->id;
-                    $files[$value->id][1] = $filesTask[0]->path;
+                    $files[$value->id] = $filesTask;
                 }
             }
 
@@ -119,7 +125,7 @@ class CategoryController extends Controller
         if(count($temp) == 1)
         {
             $friend = User::find($user_id);
-            $categoryName = Category::where('id', $category_id)->where('private', 0)->get();
+            $category = Category::where('id', $category_id)->where('private', 0)->get();
             $tasks = Task::where('category_id', $category_id)->get();
             $files = null;
 
@@ -145,9 +151,15 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        $user = auth()->user();
+
         $category = Category::where('id', $id)->get();
 
-        return view('categories.edit', ['category' => $category[0]]);
+        if ($user->can('crud',$category)) {
+            return view('categories.edit', ['category' => $category[0]]);
+
+        }
+        return redirect("home");
     }
 
     /**
