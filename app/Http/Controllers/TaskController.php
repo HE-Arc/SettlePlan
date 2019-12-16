@@ -183,8 +183,8 @@ class TaskController extends Controller
           }
 
         $task->save();
-
         return redirect('/categories/'. $task->category_id)->with('success', 'Task updated!');
+        //return redirect('/categories/'. $task->category_id)->with('success', 'Task updated!');
     }
 
     /**

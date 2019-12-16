@@ -132,7 +132,7 @@ class CategoryController extends Controller
         if(count($temp) == 1)
         {
             $friend = User::find($user_id);
-            $categoryName = Category::where('id', $category_id)->where('private', 0)->get();
+            $category = Category::where('id', $category_id)->where('private', 0)->get();
             $tasks = Task::where('category_id', $category_id)->get();
             $files = null;
 
@@ -144,8 +144,9 @@ class CategoryController extends Controller
                 }
             }
 
+            return view('categories.detail', ['tasks' => $tasks , 'user' => $friend , 'newTask' => 0, 'category' => $category[0],  'files' => $files]);
 
-            return view('categories.detail', ['tasks' => $tasks ,'files' => $files,  'newTask' => 0, 'userName' => $friend->name, 'categoryName' => $categoryName[0]->name , 'user' => $friend]);
+            //return view('categories.detail', ['tasks' => $tasks ,'files' => $files,  'newTask' => 0, 'user' => $friend->name, 'category' => $categoryName[0] , 'friends' => $friend]);
         }
     }
 
