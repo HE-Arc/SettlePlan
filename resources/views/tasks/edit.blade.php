@@ -29,7 +29,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-8 offset-sm-2">
-            <h2>Update tâche </h>
+            <h2>Update task</h>
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -57,7 +57,7 @@
 
                 <div class="form-group">
 
-                    <label for="date">Date de fin :</label>
+                    <label for="date">Due date :</label>
 
                     @if (empty($task->end_at))
                         <input type="date" class="form-control" name="end_at" />

@@ -35,11 +35,17 @@
                             <td>{{date('d/m/y', strtotime($task->end_at))}}</td>
                         @endif
 
+
                         <td>
                             @if (isset($files[$task->id]))
-                                <a href="{{   route('download',  ['category_id' => $category->id, 'task_id' => $task->id,  'file_id' => $files[$task->id][0]]) }}">File</a>
+                                    @foreach($files[$task->id] as $file)
+                                        <p>
+                                            <a href="{{   route('download',  ['category_id' => $task->category->id, 'task_id' => $task->id,  'file_id' => $file->id ] ) }}">{{ $file->name}}</a>
+                                        </p>
+                                    @endforeach
                             @endif
                         </td>
+
 
                         @can('crud', $task->category)
                         <td>

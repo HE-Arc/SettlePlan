@@ -36,7 +36,6 @@
                                 <td>{{date('d/m/y', strtotime($task->end_at))}}</td>
                             @endif
 
-                            <!-- A Modifier -->
                             <td>
                                 @if (isset($files[$task->id]))
                                         @foreach($files[$task->id] as $file)

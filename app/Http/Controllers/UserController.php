@@ -44,6 +44,11 @@ class UserController extends Controller
             return redirect()->route('friends')->with('unsuccess','Friend dosen\'t exist !');
         }
 
+        if($friend->id == $user->id)
+        {
+            return redirect()->route('friends')->with('unsuccess','It\'s not possible add yourself !');
+        }
+
         foreach ($user->users()->get() as $value)
         {
             if($value->id == $friend->id)

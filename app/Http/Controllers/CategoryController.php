@@ -95,6 +95,8 @@ class CategoryController extends Controller
 
             return view('categories.detail', ['tasks' => $tasks , 'user' => $user , 'newTask' => 1, 'category' => $category[0],  'files' => $files]);
         }
+        return redirect()->route('home');
+
     }
 
     /**
@@ -115,6 +117,7 @@ class CategoryController extends Controller
 
             return view('categories.friend', ['categorys' => $categorys , 'user' => $friend]);
         }
+        return redirect()->route('home');
 
     }
 
@@ -149,6 +152,8 @@ class CategoryController extends Controller
 
             return view('categories.detail', ['tasks' => $tasks ,'files' => $files, 'category' => $category[0], 'newTask' => 0, 'userName' => $friend->name, 'categoryName' => $category[0]->name , 'user' => $friend]);
         }
+
+        return redirect()->route('home');
     }
 
     /**
