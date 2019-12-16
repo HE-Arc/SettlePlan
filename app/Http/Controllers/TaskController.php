@@ -132,7 +132,7 @@ class TaskController extends Controller
         {
           foreach ($files as $file)
           {
-            $path = Storage::putFile('file', $file);
+            $path = Storage::putFile('/'.auth()->user()->id.'/'.$task->id, $file);
             $fileDB = new \App\File();
             $fileDB->path = $path;
             $fileDB->name = $file->getClientOriginalName();
@@ -192,12 +192,11 @@ class TaskController extends Controller
         $files = null;
         $files = $request->file('files');
 
-
         if($files != null)
         {
           foreach ($files as $file)
           {
-            $path = Storage::putFile('file', $file);
+            $path = Storage::putFile('/'.auth()->user()->id.'/'.$task->id, $file);
             $fileDB = new \App\File();
             $fileDB->path = $path;
             $fileDB->name = $file->getClientOriginalName();
