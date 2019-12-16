@@ -94,8 +94,8 @@ class TaskController extends Controller
         {
          $path = Storage::putFile('file', $file);
          $fileDB = new \App\File();
-         $fileDB->setPath($path);
-         $fileDB->setName($file->getClientOriginalName());
+         $fileDB->path = $path;
+         $fileDB->name = $file->getClientOriginalName();
          $fileDB->save();
 
           $task->files()->attach($fileDB->id);
@@ -168,7 +168,8 @@ class TaskController extends Controller
         {
              $path = Storage::putFile('file', $file);
              $fileDB = new \App\File();
-             $fileDB->setPath($path);
+             $fileDB->path = $path;
+             $fileDB->name = $file->getClientOriginalName();
              $fileDB->save();
 
              $task->files()->attach($fileDB->id);
@@ -176,16 +177,6 @@ class TaskController extends Controller
           }
 
         $task->save();
-
-        if ($file = $request->file('file')) {
-             $path = Storage::putFile('file', $file);
-             $fileDB = new \App\File();
-             $fileDB->setPath($path);
-             $fileDB->setName($file->getClientOriginalName());
-             $fileDB->save();
-
-             $task->files()->attach($fileDB->id);
-        }
 
         return redirect('/category/'. $task->category_id)->with('success', 'Task updated!');
     }
@@ -204,7 +195,7 @@ class TaskController extends Controller
 
         foreach ($files as $value) {
           $fileDB = \App\File::find($value->id);
-          Storage::delete($fileDB->getPath());
+          Storage::delete($fileDB->path);
 
           $fileDB->delete();
         }
@@ -220,7 +211,7 @@ class TaskController extends Controller
     public function deleteFile($task_id, $file_id)
     {
       $fileDB = \App\File::find($file_id);
-      Storage::delete($fileDB->getPath());
+      Storage::delete($fileDB->path);
 
       $fileDB->delete();
 

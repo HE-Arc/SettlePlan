@@ -86,7 +86,7 @@
                     @if ($files->isNotEmpty())
                     @foreach ($files as $key => $file)
                     <div class="form-group">
-                        <label>{{ $file->getName() }}</label>
+                        <label>{{ $file->name }}</label>
                         <a href="{{ route('deleteFile', ['task_id' => $task->id, 'file_id' => $file->id]) }}" class="btn btn-danger">Delete</a>
                     </div>
                     @endforeach

@@ -44,25 +44,31 @@ class UserController extends Controller
       $email = $request->input('email');
       $friend = User::all()->where('email', $email)->first();
 
-      foreach ($user->users()->get() as $value) {
-        if($value->id == $friend->id)
-        {
-          return $this->friends();
+      if($friend != null)
+      {
+        foreach ($user->users()->get() as $value) {
+          if($value->id == $friend->id)
+          {
+            return redirect()->route('friends')->with('unsuccess','Demand did\'t send !');
+          }
+        }
+
+        foreach ($friend->users()->get() as $value) {
+          if($value->id == $user->id)
+          {
+            return redirect()->route('friends')->with('unsuccess','Demand did\'t send !');
+          }
         }
       }
-
-      foreach ($friend->users()->get() as $value) {
-        if($value->id == $user->id)
-        {
-          return $this->friends();
-        }
+      else {
+        return redirect()->route('friends')->with('unsuccess','Friend dosen\'t exist !');
       }
 
       $user->users()->attach($friend->id);
 
       $user->save();
 
-      return $this->friends();
+      return redirect()->route('friends')->with('success','Friend updated successfully !');
     }
 
     /**
@@ -157,7 +163,7 @@ class UserController extends Controller
         $friendsAccepted[] = User::find($value->getUserIdWait());
       }
 
-      
+
       return view('users.friends', [
       'friendsDemand' => $friendsDemand,
       'friendsWait' => $friendsWait,
@@ -177,11 +183,11 @@ class UserController extends Controller
 
           if ($result == 0)
           {
-            return redirect()->route('friends')->with('error','La demande d\'ami n\'a pas été supprimée');
+            return redirect()->route('friends')->with('unsuccess','Friend didn\'t delete !');
           }
         }
 
-        return redirect()->route('friends')->with('success','La demande d\'ami a été supprimée');
+        return redirect()->route('friends')->with('success','Friend deleted successfully !');
     }
 
     public function acceptDemand($friend_id)
@@ -190,6 +196,6 @@ class UserController extends Controller
 
       $friendRel = UserUser::where(['user_id' => $friend_id, 'user_id1' => $user->id])->update(['status' => 1]);
 
-      return redirect()->route('friends')->with('success','La demande d\'ami a été supprimée');
+      return redirect()->route('friends')->with('success','Demand accepted successfully !');
     }
 }

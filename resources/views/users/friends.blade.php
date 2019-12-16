@@ -4,6 +4,19 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-8 offset-sm-2">
+
+          @if(session()->get('success'))
+            <div class="alert alert-success">
+              {{ session()->get('success') }}
+            </div>
+          @endif
+
+          @if(session()->get('unsuccess'))
+            <div class="alert alert-danger">
+              {{ session()->get('unsuccess') }}
+            </div>
+          @endif
+
             <h2>Friends</h>
 
                 @if ($errors->any())
