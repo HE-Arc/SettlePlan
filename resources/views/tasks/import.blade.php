@@ -3,7 +3,8 @@
 <script type='text/javascript'>
     var nbFileInput = 1;
 
-    function addFields() {
+    function addFields()
+    {
         // Files <div> where dynamic content will be placed
         var files = document.getElementById("files");
         // Append a node with a random text
