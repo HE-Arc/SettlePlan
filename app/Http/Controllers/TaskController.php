@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Task;
 use App\Category;
+use App\UserUser;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
@@ -74,13 +75,30 @@ class TaskController extends Controller
       */
      public function import($task_id)
      {
+         $task = null;
          $task = Task::find($task_id);
-          $files = $task->files()->get();
-         $userId = auth()->user()->id;
 
-         $categories = Category::where('user_id', $userId)->get();
+         if($task != null)
+         {
+            $ownerId = Category::where('id', $task->category_id)->get()[0]->user_id;
 
-         return  view('tasks/import', ['categories' => $categories, 'task' => $task, 'files' => $files]);
+            if(auth()->user()->id != $ownerId)
+            {
+                $friend = UserUser::where([['user_id',  auth()->user()->id], ['user_id1', $ownerId]])->
+                orWhere([['user_id', $ownerId], ['user_id1',  auth()->user()->id]])->get();
+
+                if(count($friend) == 1)
+                {
+                    $userId = auth()->user()->id;
+                    $categories = Category::where('user_id', $userId)->get();
+                    $files = $task->files()->get();
+
+                    return view('tasks/import', ['categories' => $categories, 'task' => $task, 'files' => $files]);
+                }
+            }
+         }
+
+         return view('/home');
      }
 
     /**
