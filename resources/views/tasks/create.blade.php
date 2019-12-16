@@ -1,7 +1,7 @@
 @extends('../layouts.app')
 
 <script type='text/javascript'>
-    var nbFileInput = 2;
+    var nbFileInput = 1;
 
     function addFields() {
         // Files <div> where dynamic content will be placed
@@ -66,12 +66,6 @@
                                     <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6">
-                                <input type="file" name="file" class="form-control-file" />
                             </div>
                         </div>
 

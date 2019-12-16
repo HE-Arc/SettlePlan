@@ -92,14 +92,15 @@ class TaskController extends Controller
 
         while($file = $request->file('file' . $i))
         {
-             $path = Storage::putFile('file', $file);
-             $fileDB = new \App\File();
-             $fileDB->setPath($path);
-             $fileDB->save();
+         $path = Storage::putFile('file', $file);
+         $fileDB = new \App\File();
+         $fileDB->setPath($path);
+         $fileDB->setName($file->getClientOriginalName());
+         $fileDB->save();
 
-             $task->files()->attach($fileDB->id);
-             $i++;
-          }
+          $task->files()->attach($fileDB->id);
+          $i++;
+        }
 
         return redirect("/category/". $task->category_id)->with('success', 'Task Created!');
     }
@@ -180,6 +181,7 @@ class TaskController extends Controller
              $path = Storage::putFile('file', $file);
              $fileDB = new \App\File();
              $fileDB->setPath($path);
+             $fileDB->setName($file->getClientOriginalName());
              $fileDB->save();
 
              $task->files()->attach($fileDB->id);

@@ -25,4 +25,14 @@ class File extends Model
      {
        $this->attributes['path'] = $value;
      }
+
+     public function getName()
+     {
+       return $this->attributes['name'];
+     }
+
+     public function setName($value)
+     {
+       $this->attributes['name'] = $value;
+     }
 }
