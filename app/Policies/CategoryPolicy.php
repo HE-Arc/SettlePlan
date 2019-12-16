@@ -96,4 +96,6 @@ class CategoryPolicy
     {
         return $user->id === $category->user_id;
     }
+
+ 
 }

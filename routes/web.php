@@ -30,5 +30,7 @@ Route::resource('categories', 'CategoryController');
 Route::get('user/friend/{user_id}', 'CategoryController@showUser')->name('user.friends');
 Route::get('user/friend/{user_id}/{category_id}', 'CategoryController@showUserCategory')->name('category.showUserCategory');;
 
+Route::get('import/{task_id}', 'TaskController@import')->name("tasks.import");
+
 Route::resource('tasks', 'TaskController');
 Route::get('categories/{category_id}/tasks/{task_id}/download/{file_id}', 'TaskController@download')->name('download');

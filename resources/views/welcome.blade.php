@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="flex-center position-ref full-height">
+<div id="welcome" class="flex-center position-ref full-height">
+   @if(session()->get('success'))
+        <div class="alert alert-success">
+            {{ session()->get('success') }}
+        </div>
+    @endif
     <div class="content">
         <div class="title m-b-md">
-            @if(session()->get('success'))
-            <div class="alert alert-success">
-                {{ session()->get('success') }}
-            </div>
-            @endif
             Welcome to SettlePlan
         </div>
     </div>

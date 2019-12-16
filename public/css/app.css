@@ -4348,7 +4348,7 @@ input[type=button].btn-block {
   background-color: #3490dc;
   border: 0;
   border-radius: 1rem;
-  -moz-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   -moz-appearance: none;
        appearance: none;
@@ -4356,7 +4356,7 @@ input[type=button].btn-block {
 
 @media (prefers-reduced-motion: reduce) {
   .custom-range::-moz-range-thumb {
-    -moz-transition: none;
+    -webkit-transition: none;
     transition: none;
   }
 }
@@ -4384,14 +4384,14 @@ input[type=button].btn-block {
   background-color: #3490dc;
   border: 0;
   border-radius: 1rem;
-  -ms-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   appearance: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .custom-range::-ms-thumb {
-    -ms-transition: none;
+    -webkit-transition: none;
     transition: none;
   }
 }
@@ -11100,4 +11100,48 @@ a.text-dark:focus {
   }
 }
 
+#welcome .full-height {
+  height: 100vh;
+}
+
+#welcome .flex-center {
+  -webkit-box-align: center;
+          align-items: center;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+}
+
+#welcome .position-ref {
+  position: relative;
+}
+
+#welcome .top-right {
+  position: absolute;
+  right: 10px;
+  top: 18px;
+}
+
+#welcome .content {
+  text-align: center;
+}
+
+#welcome .title {
+  font-size: 84px;
+}
+
+#welcome .links > a {
+  color: #636b6f;
+  padding: 0 25px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+#welcome .m-b-md {
+  margin-bottom: 30px;
+}
 
