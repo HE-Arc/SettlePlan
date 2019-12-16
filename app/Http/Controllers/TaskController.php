@@ -28,10 +28,10 @@ class TaskController extends Controller
      */
     public function index()
     {
-        /*$userId = auth()->user()->id;
+        $userId = auth()->user()->id;
         $tasks = Task::select('tasks.*')->with('category')
             ->join('categories', 'category_id', '=', 'categories.id')
-            ->where('categories.user_id' , $userId)->get();*/
+            ->where('categories.user_id' , $userId)->orderByRaw('end_at', 'DESC')->get();
 
         //dd($tasks[1]->files()->get());
 
@@ -219,7 +219,6 @@ class TaskController extends Controller
         $task->delete();
 
         return redirect('/categories/'. $categoryID)->with('success', 'Task deleted!');
-
     }
 
     public function deleteFile($task_id, $file_id)

@@ -18,7 +18,7 @@
                         <td>ID</td>
                         <td>Name</td>
                         <td>Description</td>
-                        <td>Date de fin</td>
+                        <td>Due date</td>
                         <td>Category</td>
                         <td>Fichier</td>
 
@@ -37,7 +37,7 @@
                         <td>{{date('d/m/y', strtotime($task->end_at))}}</td>
                         @endif
                         <td>{{$task->category->name}}</td>
-    
+
 
                         @if (!isset($files[$task->id]))
                             <td></td>
