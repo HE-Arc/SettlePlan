@@ -13,7 +13,7 @@
                         <table>
                             <td width="80%">
                                 <div class="form-group">
-                                    <label for="name" class="col-md-4 control-label">Name</label>
+                                    <label for="name" class="control-label">Name</label>
                                     <div class="col-md-12">
                                         <input id="name" type="text" class="form-control" name="name" required autofocus>
                                     </div>
@@ -22,8 +22,8 @@
 
                             <td width="20%">
                                 <div class="form-group">
-                                    <label for="private" class="col-md-3  control-label">Private</label>
-                                    <div class="col-md-3">
+                                    <label for="private" class="control-label">Private</label>
+                                    <div class="col-md-12">
                                         <input id="private" type="checkbox" name="private" class="form-control">
                                     </div>
                                 </div>
