@@ -28,10 +28,11 @@
                     <tr>
                         <td>{{$task->name}}</td>
                         <td style="word-break: break-word;">{{$task->description}}</td>
+
                         @if (empty($task->end_at))
-                        <td></td>
+                            <td></td>
                         @else
-                        <td>{{date('d/m/y', strtotime($task->end_at))}}</td>
+                            <td>{{date('d/m/y', strtotime($task->end_at))}}</td>
                         @endif
 
                         <td>

@@ -136,7 +136,6 @@ class TaskController extends Controller
 
         if ($user->can('crud',$task->category))
         {
-            dd('test');
             return view('tasks.edit', ['task' => $task , 'categories' => $categories,  'files' => $files]);
         }
 
