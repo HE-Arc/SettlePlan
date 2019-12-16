@@ -36,6 +36,7 @@ class TaskController extends Controller
 
         //dd($tasks[1]->files()->get());
 
+        //A Modifier
         $files = null;
 
         foreach ($tasks as $key => $value) {
@@ -72,7 +73,6 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //dump($request);
         $request->validate([
           'name'=>'required',
           'description'=>'required',
@@ -88,16 +88,19 @@ class TaskController extends Controller
         ]);
 
         $task->save();
+        $i = 1;
 
-         if ($file = $request->file('file')) {
-             $path = Storage::putFile('file', $file);
-             $fileDB = new \App\File();
-             $fileDB->setPath($path);
-             $fileDB->save();
+        while($file = $request->file('file' . $i))
+        {
+         $path = Storage::putFile('file', $file);
+         $fileDB = new \App\File();
+         $fileDB->setPath($path);
+         $fileDB->setName($file->getClientOriginalName());
+         $fileDB->save();
 
-             $task->files()->attach($fileDB->id);
-          }
-
+          $task->files()->attach($fileDB->id);
+          $i++;
+        }
 
         return redirect("/category/". $task->category_id)->with('success', 'Task Created!');
     }
@@ -130,9 +133,11 @@ class TaskController extends Controller
 
         $categories = Category::where('user_id', $userId)->get();
         $task = Task::with('category')->find($id);
+        $files = $task->files()->get();
+
         if($task->category->user_id === $userId)
         {
-            return view('tasks.edit', ['task' => $task , 'categories' => $categories]);
+            return view('tasks.edit', ['task' => $task , 'categories' => $categories,  'files' => $files]);
         }
         else
         {
@@ -161,12 +166,28 @@ class TaskController extends Controller
         $task->description = $request->get('description');
         $task->end_at = $request->get('end_at');
         $task->category_id = $request->get('category');
+
+
+        $i = 1;
+
+        while($file = $request->file('file' . $i))
+        {
+             $path = Storage::putFile('file', $file);
+             $fileDB = new \App\File();
+             $fileDB->setPath($path);
+             $fileDB->save();
+
+             $task->files()->attach($fileDB->id);
+             $i++;
+          }
+
         $task->save();
 
         if ($file = $request->file('file')) {
              $path = Storage::putFile('file', $file);
              $fileDB = new \App\File();
              $fileDB->setPath($path);
+             $fileDB->setName($file->getClientOriginalName());
              $fileDB->save();
 
              $task->files()->attach($fileDB->id);
@@ -184,10 +205,31 @@ class TaskController extends Controller
     public function destroy($id)
     {
         $task = Task::find($id);
+
+        $files = $task->files()->get();
+
+        foreach ($files as $value) {
+          $fileDB = \App\File::find($value->id);
+          Storage::delete($fileDB->getPath());
+
+          $fileDB->delete();
+        }
+
         $categoryID = $task->category_id;
+
         $task->delete();
 
         return redirect('/category/'. $categoryID)->with('success', 'Task deleted!');
 
+    }
+
+    public function deleteFile($task_id, $file_id)
+    {
+      $fileDB = \App\File::find($file_id);
+      Storage::delete($fileDB->getPath());
+
+      $fileDB->delete();
+
+      return redirect('/tasks/'. $task_id . '/edit');
     }
 }

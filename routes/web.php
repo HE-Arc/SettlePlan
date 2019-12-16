@@ -21,15 +21,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/users/accept_demand/{friend_id}', 'UserController@acceptDemand')->name('acceptDemand');
 Route::get('/users/delete_friend/{friend_id}', 'UserController@deleteFriend')->name('deleteFriend');
 Route::get('/users/friends', 'UserController@friends')->name('friends');
-Route::resource('files', 'FileController');
+
+Route::get('/tasks/deleteFile/{task_id}/{file_id}', 'TaskController@deleteFile')->name('deleteFile');
+
 Route::resource('users', 'UserController');
 Route::resource('category', 'CategoryController');
 Route::get('users/friend/{user_id}', 'CategoryController@showUser')->name('user.friends');
 Route::get('users/friend/{user_id}/{category_id}', 'CategoryController@showUserCategory')->name('category.showUserCategory');;
 Route::resource('tasks', 'TaskController')->except('index');
-
-
-
 
 Route::prefix('/category/{id}')->group(function () {
 });

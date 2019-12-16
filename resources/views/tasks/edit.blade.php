@@ -1,9 +1,31 @@
 @extends('../layouts.app')
 
+<script type='text/javascript'>
+    var nbFileInput = 1;
+
+    function addFields() {
+        // Files <div> where dynamic content will be placed
+        var files = document.getElementById("files");
+        // Append a node with a random text
+        //container.appendChild(document.createTextNode("Member " + (i+1)));
+
+        var formGroup = document.createElement("div");
+        formGroup.className = "form-group";
+
+        // Create an <input> element, set its type and name attributes
+        var input = document.createElement("input");
+        input.type = "file";
+        input.name = "file" + nbFileInput;
+        input.className = "form-control-file";
+        nbFileInput++;
+
+        formGroup.appendChild(input);
+        files.appendChild(formGroup);
+    }
+</script>
+
 @section('content')
 <div class="container">
-
-
 
     <div class="row">
         <div class="col-sm-8 offset-sm-2">
@@ -44,7 +66,6 @@
 
                     </div>
 
-
                     <div class="form-group">
                         <label for="category">Category</label>
                         <div>
@@ -61,15 +82,26 @@
                         </div>
                     </div>
 
+
+                    @if ($files->isNotEmpty())
+                    @foreach ($files as $key => $file)
                     <div class="form-group">
-                        <label for="file">File : </label>
-                        <input type="file" class="form-control" name="file" id="file" />
+                        <label>{{ $file->getName() }}</label>
+                        <a href="{{ route('deleteFile', ['task_id' => $task->id, 'file_id' => $file->id]) }}" class="btn btn-danger">Delete</a>
+                    </div>
+                    @endforeach
+                    @endif
+
+                    <div id="files"></div>
+
+                    <div class="form-group">
+                        <a href="#" id="filldetails" onclick="addFields()" class="btn btn-light">Add File</a>
+
                     </div>
 
                     <button type="submit" class="btn btn-primary">Update</button>
                 </form>
         </div>
     </div>
-
 </div>
 @endsection
