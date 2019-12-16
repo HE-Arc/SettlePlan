@@ -101,12 +101,7 @@ class TaskController extends Controller
              $i++;
           }
 
-<<<<<<< HEAD
-        return redirect('/tasks')->with('success', 'Task saved!');
-=======
-
         return redirect("/category/". $task->category_id)->with('success', 'Task Created!');
->>>>>>> 00b6e56642ca3615ca600b558efc5ccf6ff7521f
     }
 
     /**
@@ -202,7 +197,6 @@ class TaskController extends Controller
     public function destroy($id)
     {
         $task = Task::find($id);
-<<<<<<< HEAD
 
         $files = $task->files()->get();
 
@@ -213,9 +207,8 @@ class TaskController extends Controller
           $fileDB->delete();
         }
 
-=======
         $categoryID = $task->category_id;
->>>>>>> 00b6e56642ca3615ca600b558efc5ccf6ff7521f
+
         $task->delete();
 
         return redirect('/category/'. $categoryID)->with('success', 'Task deleted!');

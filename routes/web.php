@@ -30,8 +30,5 @@ Route::get('users/friend/{user_id}', 'CategoryController@showUser')->name('user.
 Route::get('users/friend/{user_id}/{category_id}', 'CategoryController@showUserCategory')->name('category.showUserCategory');;
 Route::resource('tasks', 'TaskController')->except('index');
 
-
-
-
 Route::prefix('/category/{id}')->group(function () {
 });
