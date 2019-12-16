@@ -88,11 +88,11 @@ class CategoryController extends Controller
                 }
             }
 
-            /*if ($user->can('update',$category[0])) {
-                dd('test');
-            } */
+            /**/
             
-
+            if ($user->can('crud', $category[0])) {
+            
+            } 
 
             return view('category.detail', ['tasks' => $tasks , 'userName' => auth()->user()->name , 'newTask' => 1, 'categoryName' => $category[0]->name,  'files' => $files]);
         }

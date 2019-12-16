@@ -129,8 +129,15 @@ class TaskController extends Controller
         $userId = auth()->user()->id;
 
         $categories = Category::where('user_id', $userId)->get();
-        $task = Task::find($id);
-        return view('tasks.edit', ['task' => $task , 'categories' => $categories]);
+        $task = Task::with('category')->find($id);
+        if($task->category->user_id === $userId)
+        {
+            return view('tasks.edit', ['task' => $task , 'categories' => $categories]);
+        }
+        else
+        {
+            return redirect()->action('HomeController@index');
+        }
     }
 
     /**
