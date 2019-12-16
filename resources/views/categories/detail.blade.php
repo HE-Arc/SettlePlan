@@ -40,12 +40,17 @@
 
 
                         @if (!isset($files[$task->id]))
-                            <td></td>
+                        <td></td>
                         @else
-
-                            <td><a href="{{   route('download',  ['category_id' => $category->id, 'task_id' => $task->id,  'file_id' => $files[$task->id][0]]) }}">File</a></td>
-
+                        <td>
+                        @foreach($files[$task->id] as $file)
+                            <p>
+                            <a href="{{   route('download',  ['category_id' => $category->id, 'task_id' => $task->id,  'file_id' => $file->id ] ) }}">{{ $file->name}}</a>
+                            </p>
+                        @endforeach
+                        </td>
                         @endif
+                      
                         @can('crud', $task->category)
                         <td>
                             <a href="{{ route('tasks.edit', $task->id)}}" class="btn btn-primary">Edit</a>

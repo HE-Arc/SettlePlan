@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
+
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -86,20 +93,13 @@ class CategoryController extends Controller
                 $filesTask = $value->files()->get();
                 if(isset($filesTask[0]))
                 {
-                    $files[$value->id][0] = $filesTask[0]->id;
-                    $files[$value->id][1] = $filesTask[0]->path;
-
-                }
+                $files[$value->id] = $filesTask;
+                 }
             }
-
-
 
             /*if ($user->can('update',$category[0])) {
                 dd('test');
             } */
-
-
-
             return view('categories.detail', ['tasks' => $tasks , 'user' => $user , 'newTask' => 1, 'category' => $category[0],  'files' => $files]);
         }
     }

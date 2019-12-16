@@ -36,19 +36,19 @@ class TaskController extends Controller
         //dd($tasks[1]->files()->get());
 
         //A Modifier
-        /*$files = null;
+        $files = null;
 
         foreach ($tasks as $key => $value) {
           $filesTask = $value->files()->get();
           if(isset($filesTask[0]))
           {
-            $files[$value->id] = $filesTask[0]->path;
+            $files[$value->id] = $filesTask;
           }
-        }*/
-        //dd($files);
+        }
+
         //dd($tasks);
         //$tasks = Task::with('category')->where('user_id', $userId)->get();
-        //return  view('tasks/index', ['tasks' => $tasks, 'files' => $files]);
+        return  view('tasks/index', ['tasks' => $tasks, 'files' => $files]);
     }
 
     /**
@@ -183,7 +183,7 @@ class TaskController extends Controller
 
         $task->save();
         return redirect('/categories/'. $task->category_id)->with('success', 'Task updated!');
-        //return redirect('/categories/'. $task->category_id)->with('success', 'Task updated!');
+
     }
 
     /**

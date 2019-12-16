@@ -36,8 +36,15 @@
             @if (!isset($files[$task->id]))
               <td></td>
             @else
-              <td><a href="{{ Storage::url($files[$task->id]) }}">File</a></td>
+              <td>
+              @foreach($files[$task->id] as $file)
+                <p>
+                 <a href="{{   route('download',  ['category_id' => $task->category->id, 'task_id' => $task->id,  'file_id' => $file->id ] ) }}">{{ $file->name}}</a>
+                </p>
+              @endforeach
+              </td>
             @endif
+
 
             <td>
                 <a href="{{ route('tasks.edit', $task->id)}}" class="btn btn-primary">Edit</a>
