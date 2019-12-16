@@ -128,20 +128,21 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        $userId = auth()->user()->id;
+        $user = auth()->user();
 
-        $categories = Category::where('user_id', $userId)->get();
+        $categories = Category::where('user_id', $user->id)->get();
+
         $task = Task::with('category')->find($id);
-        $files = $task->files()->get();
+        
 
-        if($task->category->user_id === $userId)
-        {
-            return view('tasks.edit', ['task' => $task , 'categories' => $categories,  'files' => $files]);
-        }
-        else
-        {
-            return redirect()->action('HomeController@index');
-        }
+        $files = $task->files()->get();
+          
+        if ($user->can('crud',$task->category)) {
+          dd('test');
+          return view('tasks.edit', ['task' => $task , 'categories' => $categories,  'files' => $files]);
+        } 
+
+        return redirect("home");
     }
 
     /**

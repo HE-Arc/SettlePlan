@@ -158,9 +158,17 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        $user = auth()->user();
+
         $category = Category::where('id', $id)->get();
 
-        return view('categories.edit', ['category' => $category[0]]);
+        if ($user->can('crud',$category)) {
+            return view('categories.edit', ['category' => $category[0]]);
+
+        } 
+
+        return redirect("home");
+
     }
 
     /**
