@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\DB;
 class CategoryController extends Controller
 {
     // the user must be logged
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -71,23 +70,31 @@ class CategoryController extends Controller
      */
     public function show($category_id)
     {
-        $user = auth()->user();
+        $userId = auth()->user()->id;
+
         // check if the user own the category
-        $category = Category::find($category_id);
-        if ($user->can('crud', $category) ) {
-        
+
+        $category = Category::where('user_id', $userId)->where("id", $category_id)->get();
+
+        if(count($category) == 1)
+        {
             $tasks = Task::where("category_id", $category_id)->orderByRaw('end_at', 'DESC')->get();
+
+            $user = auth()->user();
+
             $files = null;
-            foreach ($tasks as $key => $value) {
+
+            foreach ($tasks as $key => $value)
+            {
                 $filesTask = $value->files()->get();
                 if(isset($filesTask[0]))
                 {
                     $files[$value->id] = $filesTask;
                 }
             }
-            return view('categories.detail', ['tasks' => $tasks , 'user' => $user , 'newTask' => 1, 'category' => $category,  'files' => $files]);
-        } 
-        return redirect()->route('home');
+
+            return view('categories.detail', ['tasks' => $tasks , 'user' => $user , 'newTask' => 1, 'category' => $category[0],  'files' => $files]);
+        }
     }
 
     /**
@@ -100,6 +107,7 @@ class CategoryController extends Controller
     {
         $temp = UserUser::where([['user_id',  auth()->user()->id], ['user_id1', $user_id]])->
         orWhere([['user_id', $user_id], ['user_id1',  auth()->user()->id]])->get();
+
         if(count($temp) == 1)
         {
             $friend = User::find($user_id);
@@ -107,6 +115,7 @@ class CategoryController extends Controller
 
             return view('categories.friend', ['categorys' => $categorys , 'user' => $friend]);
         }
+
     }
 
     /**
@@ -126,7 +135,9 @@ class CategoryController extends Controller
             $category = Category::where('id', $category_id)->where('private', 0)->get();
             $tasks = Task::where('category_id', $category_id)->get();
             $files = null;
+
             $category = Category::where("id", $category_id)->get();
+
             foreach ($tasks as $key => $value)
             {
                 $filesTask = $value->files()->get();
@@ -135,6 +146,7 @@ class CategoryController extends Controller
                     $files[$value->id] = $filesTask[0]->path;
                 }
             }
+
             return view('categories.detail', ['tasks' => $tasks ,'files' => $files, 'category' => $category[0], 'newTask' => 0, 'userName' => $friend->name, 'categoryName' => $category[0]->name , 'user' => $friend]);
         }
     }
@@ -148,9 +160,12 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $user = auth()->user();
-        $category = Category::find($id);
+
+        $category = Category::where('id', $id)->get();
+
         if ($user->can('crud',$category)) {
-            return view('categories.edit', ['category' => $category]);
+            return view('categories.edit', ['category' => $category[0]]);
+
         }
         return redirect("home");
     }
@@ -173,6 +188,7 @@ class CategoryController extends Controller
         $category->private = (int)$request->has('private');
 
         $category->save();
+
         return redirect('/categories')->with('success', 'Category updated!');
     }
 
@@ -186,6 +202,7 @@ class CategoryController extends Controller
     {
         $category = Category::where('id', $id)->where('user_id', auth()->user()->id);
         $category->delete();
+
         return redirect('/categories')->with('success', 'Category deleted !');
     }
 }
