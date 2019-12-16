@@ -37,7 +37,7 @@
 
 
                         <td>
-                            @if (isset($files[$task->id]))
+                            @if(isset($files[$task->id]))
                                     @foreach($files[$task->id] as $file)
                                         <p>
                                             <a href="{{   route('download',  ['category_id' => $task->category->id, 'task_id' => $task->id,  'file_id' => $file->id ] ) }}">{{ $file->name}}</a>

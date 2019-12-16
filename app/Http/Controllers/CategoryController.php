@@ -146,10 +146,10 @@ class CategoryController extends Controller
                 $filesTask = $value->files()->get();
                 if(isset($filesTask[0]))
                 {
-                    $files[$value->id] = $filesTask[0]->path;
+                    $files[$value->id] = $filesTask;
                 }
             }
-
+            
             return view('categories.detail', ['tasks' => $tasks ,'files' => $files, 'category' => $category[0], 'newTask' => 0, 'userName' => $friend->name, 'categoryName' => $category[0]->name , 'user' => $friend]);
         }
 
