@@ -29,6 +29,5 @@ Route::resource('category', 'CategoryController');
 Route::get('users/friend/{user_id}', 'CategoryController@showUser')->name('user.friends');
 Route::get('users/friend/{user_id}/{category_id}', 'CategoryController@showUserCategory')->name('category.showUserCategory');;
 Route::resource('tasks', 'TaskController')->except('index');
+Route::get('category/{category_id}/tasks/{task_id}/download/{file_id}', 'TaskController@download')->name('download');
 
-Route::prefix('/category/{id}')->group(function () {
-});
