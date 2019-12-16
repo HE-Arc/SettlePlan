@@ -93,8 +93,8 @@ class TaskController extends Controller
         {
          $path = Storage::putFile('file', $file);
          $fileDB = new \App\File();
-         $fileDB->setPath($path);
-         $fileDB->setName($file->getClientOriginalName());
+         $fileDB->path = $path;
+         $fileDB->name = $file->getClientOriginalName();
          $fileDB->save();
 
           $task->files()->attach($fileDB->id);
@@ -173,7 +173,8 @@ class TaskController extends Controller
         {
              $path = Storage::putFile('file', $file);
              $fileDB = new \App\File();
-             $fileDB->setPath($path);
+             $fileDB->path = $path;
+             $fileDB->name = $file->getClientOriginalName();
              $fileDB->save();
 
              $task->files()->attach($fileDB->id);
@@ -209,7 +210,7 @@ class TaskController extends Controller
 
         foreach ($files as $value) {
           $fileDB = \App\File::find($value->id);
-          Storage::delete($fileDB->getPath());
+          Storage::delete($fileDB->path);
 
           $fileDB->delete();
         }
@@ -224,10 +225,20 @@ class TaskController extends Controller
     public function deleteFile($task_id, $file_id)
     {
       $fileDB = \App\File::find($file_id);
-      Storage::delete($fileDB->getPath());
+      Storage::delete($fileDB->path);
 
       $fileDB->delete();
 
       return redirect('/tasks/'. $task_id . '/edit');
+    }
+
+
+    public function download($category_id , $task_id , $file_id)
+    {
+      $fileDB = \App\File::find($file_id);
+
+      //return  Storage::download($fileDB->path, $fileDB->name);
+
+      return response()->download(storage_path('app/'.$fileDB->path), $fileDB->name);
     }
 }

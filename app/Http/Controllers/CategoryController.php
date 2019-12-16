@@ -86,9 +86,13 @@ class CategoryController extends Controller
                 $filesTask = $value->files()->get();
                 if(isset($filesTask[0]))
                 {
-                    $files[$value->id] = $filesTask[0]->path;
+                    $files[$value->id][0] = $filesTask[0]->id;
+                    $files[$value->id][1] = $filesTask[0]->path;
+
                 }
             }
+
+
 
             /*if ($user->can('update',$category[0])) {
                 dd('test');
@@ -96,7 +100,7 @@ class CategoryController extends Controller
 
 
 
-            return view('categories.detail', ['tasks' => $tasks , 'userName' => auth()->user()->name , 'newTask' => 1, 'categoryName' => $category[0]->name,  'files' => $files]);
+            return view('category.detail', ['tasks' => $tasks , 'user' => $user , 'newTask' => 1, 'category' => $category[0],  'files' => $files]);
         }
     }
 
