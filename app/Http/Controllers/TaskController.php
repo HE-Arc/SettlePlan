@@ -37,7 +37,7 @@ class TaskController extends Controller
         //dd($tasks[1]->files()->get());
 
         //A Modifier
-        $files = null;
+        /*$files = null;
 
         foreach ($tasks as $key => $value) {
           $filesTask = $value->files()->get();
@@ -45,11 +45,11 @@ class TaskController extends Controller
           {
             $files[$value->id] = $filesTask[0]->path;
           }
-        }
+        }*/
         //dd($files);
         //dd($tasks);
         //$tasks = Task::with('category')->where('user_id', $userId)->get();
-        return  view('tasks/index', ['tasks' => $tasks, 'files' => $files]);
+        //return  view('tasks/index', ['tasks' => $tasks, 'files' => $files]);
     }
 
     /**
@@ -102,7 +102,7 @@ class TaskController extends Controller
           $i++;
         }
 
-        return redirect("/category/". $task->category_id)->with('success', 'Task Created!');
+        return redirect("/categories/". $task->category_id)->with('success', 'Task Created!');
     }
 
     /**
@@ -184,7 +184,7 @@ class TaskController extends Controller
 
         $task->save();
 
-        return redirect('/category/'. $task->category_id)->with('success', 'Task updated!');
+        return redirect('/categories/'. $task->category_id)->with('success', 'Task updated!');
     }
 
     /**
@@ -210,7 +210,7 @@ class TaskController extends Controller
 
         $task->delete();
 
-        return redirect('/category/'. $categoryID)->with('success', 'Task deleted!');
+        return redirect('/categories/'. $categoryID)->with('success', 'Task deleted!');
 
     }
 
