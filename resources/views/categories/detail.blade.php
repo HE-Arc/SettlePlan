@@ -18,8 +18,7 @@
                         <td>Name</td>
                         <td>Description</td>
                         <td>Due date</td>
-                        <td>Category</td>
-                        <td>Fichier</td>
+                        <td>Files</td>
 
                         <td colspan=2>Actions</td>
                     </tr>
@@ -34,16 +33,13 @@
                         @else
                         <td>{{date('d/m/y', strtotime($task->end_at))}}</td>
                         @endif
-                        <td>{{$task->category->name}}</td>
 
-
-                        @if (!isset($files[$task->id]))
-                            <td></td>
-                        @else
-
-                            <td><a href="{{   route('download',  ['category_id' => $category->id, 'task_id' => $task->id,  'file_id' => $files[$task->id][0]]) }}">File</a></td>
-
-                        @endif
+                        <td>
+                            @if (isset($files[$task->id]))
+                                <a href="{{   route('download',  ['category_id' => $category->id, 'task_id' => $task->id,  'file_id' => $files[$task->id][0]]) }}">File</a>
+                            @endif
+                        </td>
+                        
                         @can('crud', $task->category)
                         <td>
                             <a href="{{ route('tasks.edit', $task->id)}}" class="btn btn-primary">Edit</a>
