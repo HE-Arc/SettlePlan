@@ -29,7 +29,7 @@
                 </div>
                 <br />
                 @endif
-                <form action="{{ route('users.store') }}" method="POST">
+                <form action="{{ route('user.store') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="form-group">
@@ -59,6 +59,7 @@
                         <td>{{ $user->email }}</td>
 
                         <td><a href="{{ route('acceptDemand', $user->id ) }}" class="btn btn-success">Accept</a></td>
+                        <td><a href="{{ route('deleteFriend', $user->id ) }}" class="btn btn-danger">Delete demand</a></td>
                     </tr>
                     @endforeach
                 </table>
@@ -71,7 +72,6 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td><a href="{{ route('user.friends', $user->id ) }}" class="btn btn-primary">Show Profile</a></td>
-
                         <td><a href="{{ route('deleteFriend', $user->id ) }}" class="btn btn-danger">Delete friend</a></td>
                     </tr>
                     @endforeach

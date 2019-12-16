@@ -14,9 +14,9 @@
             </div>
             </br>
             @endif
-            <form method="POST" action="{{ route('users.update', $user->id) }}">
+            <form method="POST" action="{{ route('user.update', $user->id) }}">
                 @csrf
-                @method('PATH')
+                @method('PATCH')
 
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -28,7 +28,7 @@
                     <input id="email" class="form-control" type="email" name="email" value="{{ $user->email }}" required autocomplete="email" />
                 </div>
                 <button class="btn btn-primary" type="submit">Update</button>
-                <a href="{{ route('users.index') }}" class="btn btn-danger">Cancel</a>
+                <a href="{{ route('user.index') }}" class="btn btn-danger">Cancel</a>
             </form>
         </div>
     </div>

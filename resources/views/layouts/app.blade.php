@@ -51,7 +51,7 @@
                         @else
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('category.index') }}"> Categories </a>
+                                <a class="nav-link" href="{{ route('categories.index') }}"> Categories </a>
                             </li>
 
                             <li class="nav-item dropdown">
@@ -60,8 +60,8 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('friends') }}">Show Friends</a>
-                                    <a class="dropdown-item" href="{{ route('users.index') }}">Configuration User</a>
+                                    <a class="dropdown-item" href="{{ route('user.index') }}">Profile</a>
+                                    <a class="dropdown-item" href="{{ route('friends') }}">Friends</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
