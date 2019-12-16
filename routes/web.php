@@ -34,3 +34,4 @@ Route::get('import/{task_id}', 'TaskController@import')->name("tasks.import");
 
 Route::resource('tasks', 'TaskController');
 Route::get('categories/{category_id}/tasks/{task_id}/download/{file_id}', 'TaskController@download')->name('download');
+Route::get('categories/{category_id}/tasks/{task_id}/edit', 'TaskController@edit')->name('categories.tasks.edit');

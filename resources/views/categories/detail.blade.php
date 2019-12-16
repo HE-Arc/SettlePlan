@@ -43,7 +43,9 @@
 
                         @can('crud', $task->category)
                         <td>
-                            <a href="{{ route('tasks.edit', $task->id)}}" class="btn btn-primary">Edit</a>
+                            <!--<a href="{{ route('tasks.edit', $task->id)}}" class="btn btn-primary">Edit</a>-->
+                            <a href="{{   route('categories.tasks.edit',  ['category_id' => $category->id, 'task_id' => $task->id]) }}" class="btn btn-primary">Edit</a>
+
                         </td>
                         <td>
                             <form action="{{ route('tasks.destroy', $task->id)}}" method="post">
