@@ -20,7 +20,6 @@ class TaskController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-
     }
     /**
      * Display a listing of the resource.
@@ -102,7 +101,7 @@ class TaskController extends Controller
           $i++;
         }
 
-        return redirect("/category/". $task->category_id)->with('success', 'Task Created!');
+        return redirect("/categories/". $task->category_id)->with('success', 'Task Created!');
     }
 
     /**
@@ -193,7 +192,7 @@ class TaskController extends Controller
              $task->files()->attach($fileDB->id);
         }
 
-        return redirect('/category/'. $task->category_id)->with('success', 'Task updated!');
+        return redirect('/categories/'. $task->category_id)->with('success', 'Task updated!');
     }
 
     /**
@@ -219,7 +218,7 @@ class TaskController extends Controller
 
         $task->delete();
 
-        return redirect('/category/'. $categoryID)->with('success', 'Task deleted!');
+        return redirect('/categories/'. $categoryID)->with('success', 'Task deleted!');
 
     }
 
