@@ -8,8 +8,6 @@ use App\User;
 use App\UserUser;
 use App\Task;
 
-use Illuminate\Database\Eloquent\Builder;
-
 use Illuminate\Support\Facades\DB;
 
 

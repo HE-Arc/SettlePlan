@@ -12,11 +12,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 
-
-
 class TaskController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('auth');
