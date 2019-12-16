@@ -69,11 +69,9 @@
                             </div>
                         </div>
 
-                        <div id="files"></div>
-
                         <div class="form-group">
                             <div class="col-md-6">
-                                <a href="#" id="filldetails" onclick="addFields()" class="btn btn-secondary" >Add File</a>
+                                <input type="file" name="files[]" class="form-control-file" multiple />
                             </div>
                         </div>
 

@@ -84,18 +84,18 @@ class TaskController extends Controller
         ]);
 
         $task->save();
-        $i = 1;
 
-        while($file = $request->file('file' . $i))
+        $files = $request->file('files');
+
+        foreach ($files as $file)
         {
-         $path = Storage::putFile('file', $file);
-         $fileDB = new \App\File();
-         $fileDB->path = $path;
-         $fileDB->name = $file->getClientOriginalName();
-         $fileDB->save();
+           $path = Storage::putFile('file', $file);
+           $fileDB = new \App\File();
+           $fileDB->path = $path;
+           $fileDB->name = $file->getClientOriginalName();
+           $fileDB->save();
 
-          $task->files()->attach($fileDB->id);
-          $i++;
+           $task->files()->attach($fileDB->id);
         }
 
         return redirect("/categories/". $task->category_id)->with('success', 'Task Created!');
@@ -164,32 +164,20 @@ class TaskController extends Controller
         $task->category_id = $request->get('category');
 
 
-        $i = 1;
+        $files = $request->file('files');
 
-        while($file = $request->file('file' . $i))
+        foreach ($files as $file)
         {
-             $path = Storage::putFile('file', $file);
-             $fileDB = new \App\File();
-             $fileDB->path = $path;
-             $fileDB->name = $file->getClientOriginalName();
-             $fileDB->save();
+           $path = Storage::putFile('file', $file);
+           $fileDB = new \App\File();
+           $fileDB->path = $path;
+           $fileDB->name = $file->getClientOriginalName();
+           $fileDB->save();
 
-             $task->files()->attach($fileDB->id);
-             $i++;
-          }
-
-        $task->save();
-
-        if ($file = $request->file('file')) {
-             $path = Storage::putFile('file', $file);
-             $fileDB = new \App\File();
-             $fileDB->setPath($path);
-             $fileDB->setName($file->getClientOriginalName());
-             $fileDB->save();
-
-             $task->files()->attach($fileDB->id);
+           $task->files()->attach($fileDB->id);
         }
 
+        $task->save();
         return redirect('/categories/'. $task->category_id)->with('success', 'Task updated!');
     }
 
@@ -217,6 +205,10 @@ class TaskController extends Controller
         $task->delete();
 
         return redirect('/categories/'. $categoryID)->with('success', 'Task deleted!');
+<<<<<<< HEAD
+
+=======
+>>>>>>> c4cff93fed6160041dda85fedcb9bcdafbddad5f
     }
 
     public function deleteFile($task_id, $file_id)

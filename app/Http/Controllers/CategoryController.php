@@ -88,7 +88,6 @@ class CategoryController extends Controller
                     $files[$value->id][1] = $filesTask[0]->path;
                 }
             }
-
             return view('categories.detail', ['tasks' => $tasks , 'user' => $user , 'newTask' => 1, 'category' => $category[0],  'files' => $files]);
         }
     }

@@ -82,7 +82,6 @@
                         </div>
                     </div>
 
-
                     @if ($files->isNotEmpty())
                     @foreach ($files as $key => $file)
                     <div class="form-group">
@@ -92,10 +91,8 @@
                     @endforeach
                     @endif
 
-                    <div id="files"></div>
-
                     <div class="form-group">
-                        <a href="#" id="filldetails" onclick="addFields()" class="btn btn-secondary">Add File</a>
+                      <input type="file" name="files[]" class="form-control-file" multiple/>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Update</button>
