@@ -10,7 +10,6 @@ use App\Task;
 
 use Illuminate\Support\Facades\DB;
 
-
 class CategoryController extends Controller
 {
     /**
@@ -71,7 +70,6 @@ class CategoryController extends Controller
 
         $category = Category::where('user_id', $userId)->where("id", $category_id)->get();
 
-
         if(count($category) == 1)
         {
             $tasks = Task::where("category_id", $category_id)->orderByRaw('end_at', 'DESC')->get();
@@ -88,6 +86,7 @@ class CategoryController extends Controller
                     $files[$value->id][1] = $filesTask[0]->path;
                 }
             }
+
             return view('categories.detail', ['tasks' => $tasks , 'user' => $user , 'newTask' => 1, 'category' => $category[0],  'files' => $files]);
         }
     }
@@ -124,6 +123,8 @@ class CategoryController extends Controller
             $tasks = Task::where('category_id', $category_id)->get();
             $files = null;
 
+            $category = Category::where("id", $category_id)->get();
+
             foreach ($tasks as $key => $value) {
                 $filesTask = $value->files()->get();
                 if(isset($filesTask[0]))
@@ -132,8 +133,7 @@ class CategoryController extends Controller
                 }
             }
 
-
-            return view('categories.detail', ['tasks' => $tasks ,'files' => $files,  'newTask' => 0, 'userName' => $friend->name, 'categoryName' => $categoryName[0]->name , 'user' => $friend]);
+            return view('categories.detail', ['tasks' => $tasks ,'files' => $files, 'category' => $category[0], 'newTask' => 0, 'userName' => $friend->name, 'categoryName' => $categoryName[0]->name , 'user' => $friend]);
         }
     }
 

@@ -53,13 +53,23 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $userId = auth()->user()->id;
+     public function create()
+     {
+         $userId = auth()->user()->id;
 
-        $categories = Category::where('user_id', $userId)->get();
-        return  view('tasks/create', ['categories' => $categories]);
-    }
+         $categories = Category::where('user_id', $userId)->get();
+         return  view('tasks/create', ['categories' => $categories]);
+     }
+
+     public function import($id)
+     {
+         $task = Task::find($id)->get();
+         $userId = auth()->user()->id;
+
+         $categories = Category::where('user_id', $userId)->get();
+
+         return  view('tasks/import', ['categories' => $categories, 'import' => $task[0]]);
+     }
 
     /**
      * Store a newly created resource in storage.
@@ -164,7 +174,7 @@ class TaskController extends Controller
         $task->category_id = $request->get('category');
 
 
-        $files = $request->file('files');
+        /*$files = $request->file('files');
 
         foreach ($files as $file)
         {
@@ -175,7 +185,7 @@ class TaskController extends Controller
            $fileDB->save();
 
            $task->files()->attach($fileDB->id);
-        }
+       }*/
 
         $task->save();
         return redirect('/categories/'. $task->category_id)->with('success', 'Task updated!');

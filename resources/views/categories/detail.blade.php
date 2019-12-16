@@ -39,7 +39,7 @@
                                 <a href="{{   route('download',  ['category_id' => $category->id, 'task_id' => $task->id,  'file_id' => $files[$task->id][0]]) }}">File</a>
                             @endif
                         </td>
-                        
+
                         @can('crud', $task->category)
                         <td>
                             <a href="{{ route('tasks.edit', $task->id)}}" class="btn btn-primary">Edit</a>
@@ -50,6 +50,10 @@
                                 @method('DELETE')
                                 <button class="btn btn-danger" type="submit">Delete</button>
                             </form>
+                        </td>
+                        @else
+                        <td>
+                            <a href="{{ route('tasks.import', $task->id)}}" class="btn btn-primary">Import</a>
                         </td>
                         @endcan
                     </tr>
