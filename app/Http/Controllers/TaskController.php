@@ -29,19 +29,15 @@ class TaskController extends Controller
             ->join('categories', 'category_id', '=', 'categories.id')
             ->where('categories.user_id' , $userId)->orderByRaw('end_at', 'DESC')->get();
 
-        //A Modifier
         $files = null;
-
         foreach ($tasks as $key => $value)
         {
             $filesTask = $value->files()->get();
-
             if(isset($filesTask[0]))
             {
                 $files[$value->id] = $filesTask;
             }
         }
-
         return  view('tasks/index', ['tasks' => $tasks, 'files' => $files]);
     }
 
@@ -58,10 +54,14 @@ class TaskController extends Controller
          return  view('tasks/create', ['categories' => $categories]);
      }
 
+    /**
+     * Show the form for creating a new resource with selected category.
+     *
+     * @return \Illuminate\Http\Response
+     */
      public function createFromCategory($category_id)
      {
          $userId = auth()->user()->id;
-
          $categories = Category::where('user_id', $userId)->get();
          return  view('tasks/create', ['categories' => $categories , 'selectedCategory' => $category_id]);
      }
@@ -124,9 +124,6 @@ class TaskController extends Controller
         }
 
         $task->save();
-
-
-
         return redirect("/categories/". $task->category_id)->with('success', 'Task Created!');
     }
 
@@ -141,17 +138,13 @@ class TaskController extends Controller
         $user = auth()->user();
 
         $categories = Category::where('user_id', $user->id)->get();
-
         $task = Task::with('category')->find($id);
-
-
         $files = $task->files()->get();
 
         if ($user->can('crud',$task->category))
         {
             return view('tasks.edit', ['task' => $task , 'categories' => $categories,  'files' => $files]);
         }
-
         return redirect("home");
     }
 

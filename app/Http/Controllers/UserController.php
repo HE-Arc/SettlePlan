@@ -61,9 +61,7 @@ class UserController extends Controller
         }
 
         $user->users()->attach($friend->id);
-
         $user->save();
-
         return redirect()->route('friends')->with('success','Friend updated successfully !');
     }
 
