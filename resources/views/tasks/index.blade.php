@@ -49,7 +49,7 @@
             @if (!isset($files[$task->id]))
               <td></td>
             @else
-              <td><a href="../storage/app/{{ $files[$task->id] }}">File</a></td>
+              <td><a href="{{ Storage::url($files[$task->id]) }}">File</a></td>
             @endif
 
             <td>

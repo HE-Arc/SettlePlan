@@ -17,8 +17,19 @@
                 </tr>
             </table>
             <br/>
-            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary">Edit</a></td>
-            <a href="{{ route('users.destroy', $user->id) }}" class="btn btn-danger">Delete</a></td>
+
+            <table>
+                <td>
+                    <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary">Edit</a></td>
+                </td>
+                <td>
+
+                    <form action="{{ route('user.destroy', $user->id) }}" method="post">
+                      @csrf
+                      @method('DELETE')
+                      <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>@csrf
+                </td>
         </div>
     </div>
 </div>
