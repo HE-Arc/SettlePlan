@@ -223,4 +223,14 @@ class TaskController extends Controller
 
       return redirect('/tasks/'. $task_id . '/edit');
     }
+
+
+    public function download($category_id , $task_id , $file_id)
+    {
+      $fileDB = \App\File::find($file_id);
+
+      //return  Storage::download($fileDB->path, $fileDB->name);
+
+      return response()->download(storage_path('app/'.$fileDB->path), $fileDB->name);
+    }
 }

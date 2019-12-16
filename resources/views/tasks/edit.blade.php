@@ -95,8 +95,7 @@
                     <div id="files"></div>
 
                     <div class="form-group">
-                        <a href="#" id="filldetails" onclick="addFields()" class="btn btn-light">Add File</a>
-
+                        <a href="#" id="filldetails" onclick="addFields()" class="btn btn-secondary">Add File</a>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Update</button>

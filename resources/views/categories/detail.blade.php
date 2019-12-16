@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12">
-            <h2> Task of {{$categoryName}} from {{$userName}} : </h2>
+            <h2> Task of {{$category->name}} from {{$user->name}} : </h2>
 
             @if($newTask == 1)
                 <div>
@@ -42,7 +42,9 @@
                         @if (!isset($files[$task->id]))
                             <td></td>
                         @else
-                            <td><a href="../storage/app/{{ $files[$task->id] }}">File</a></td>
+
+                            <td><a href="{{   route('download',  ['category_id' => $category->id, 'task_id' => $task->id,  'file_id' => $files[$task->id][0]]) }}">File</a></td>
+
                         @endif
                         @can('crud', $task->category)
                         <td>
