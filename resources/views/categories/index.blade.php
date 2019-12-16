@@ -20,7 +20,7 @@
     <thead>
         <tr>
           <td>Name</td>
-          <td>prive</td>
+          <td>private</td>
           <td colspan = 2>Actions</td>
         </tr>
     </thead>
@@ -30,7 +30,15 @@
             <td>
                 <a href="{{ route('categories.show', $category->id)}}">{{$category->name}}</a>
             </td>
-            <td>{{$category->private}}</td>
+            <td>
+
+                @if ($category->private == 0)
+                    no
+                @else
+                    yes
+                @endif
+
+            </td>
 
             <td>
                 <a href="{{ route('categories.edit',$category->id)}}" class="btn btn-primary">Edit</a>

@@ -8,34 +8,26 @@
 <div class="col-sm-12">
 
   <div class="col-sm-12">
-
-    @if(session()->get('success'))
-      <div class="alert alert-success">
-        {{ session()->get('success') }}
-      </div>
-    @endif
-  </div>
-
-  <h2> Tâches : </h2>
-    <div>
-  <a style="margin-bottom:5px;" href="{{ route('tasks.create')}}" class="btn btn-primary">Nouvelle Tâche</a>
-  </div>
+  <h2> Tasks : </h2>
   <table class="table table-striped">
     <thead>
         <tr>
-          <td>ID</td>
+          <td>Category</td>
           <td>Name</td>
           <td>Description</td>
-          <td>Date de fin</td>
-          <td>Category</td>
-          <td>File</td>
+          <td>Due date</td>
+          <td>Files</td>
           <td colspan = 2>Actions</td>
         </tr>
     </thead>
     <tbody>
         @foreach($tasks as $task)
         <tr>
-            <td>{{$task->id}}</td>
+
+            <td>
+                <a href="{{ route('categories.show', $task->category->id)}}">{{$task->category->name}}</a>
+            </td>
+
             <td>{{$task->name}}</td>
             <td style="word-break: break-word;">{{$task->description}}</td>
               @if (empty($task->end_at))
@@ -43,7 +35,6 @@
               @else
                 <td>{{date('d/m/y', strtotime($task->end_at))}}</td>
               @endif
-            <td>{{$task->category->name}}</td>
 
             <!-- A Modifier -->
             @if (!isset($files[$task->id]))
@@ -53,7 +44,7 @@
             @endif
 
             <td>
-                <a href="{{ route('tasks.edit',$task->id)}}" class="btn btn-primary">Edit</a>
+                <a href="{{ route('tasks.edit', $task->id)}}" class="btn btn-primary">Edit</a>
             </td>
             <td>
                 <form action="{{ route('tasks.destroy', $task->id)}}" method="post">

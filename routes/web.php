@@ -16,6 +16,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/user/friend/accept_demand/{friend_id}', 'UserController@acceptDemand')->name('acceptDemand');
@@ -28,6 +29,6 @@ Route::resource('user', 'UserController');
 Route::resource('categories', 'CategoryController');
 Route::get('user/friend/{user_id}', 'CategoryController@showUser')->name('user.friends');
 Route::get('user/friend/{user_id}/{category_id}', 'CategoryController@showUserCategory')->name('category.showUserCategory');;
-Route::resource('tasks', 'TaskController')->except('index');
-Route::get('categories/{category_id}/tasks/{task_id}/download/{file_id}', 'TaskController@download')->name('download');
 
+Route::resource('tasks', 'TaskController');
+Route::get('categories/{category_id}/tasks/{task_id}/download/{file_id}', 'TaskController@download')->name('download');
