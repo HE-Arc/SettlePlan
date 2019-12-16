@@ -205,10 +205,6 @@ class TaskController extends Controller
         $task->delete();
 
         return redirect('/categories/'. $categoryID)->with('success', 'Task deleted!');
-<<<<<<< HEAD
-
-=======
->>>>>>> c4cff93fed6160041dda85fedcb9bcdafbddad5f
     }
 
     public function deleteFile($task_id, $file_id)
@@ -220,7 +216,7 @@ class TaskController extends Controller
 
       return redirect('/tasks/'. $task_id . '/edit');
     }
-    
+
     public function download($category_id , $task_id , $file_id)
     {
       $fileDB = \App\File::find($file_id);
