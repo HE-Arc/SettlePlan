@@ -6,6 +6,12 @@
 <div class="col-sm-12">
   <h2 > Categories of {{$userName}} : </h2>
 
+  @if(session()->get('success'))
+    <div class="alert alert-success">
+      {{ session()->get('success') }}
+    </div>
+  @endif
+
   <div>
     <a style="margin-bottom:5px;" href="{{ route('category.create')}}" class="btn btn-primary">New category</a>
   </div>

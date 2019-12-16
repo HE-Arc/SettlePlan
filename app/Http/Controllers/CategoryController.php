@@ -8,6 +8,8 @@ use App\User;
 use App\UserUser;
 use App\Task;
 
+use Illuminate\Database\Eloquent\Builder;
+
 use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
@@ -123,11 +125,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $userId = auth()->user()->id;
+        $category = Category::where('id', $id)->get();
 
-        $categories = Category::find($id)->where('user_id', $userId)->get();
-
-        return view('category.edit', ['task' => $task , 'categories' => $categories]);
+        return view('category.edit', ['category' => $category[0]]);
     }
 
     /**
@@ -140,16 +140,16 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-          'name'=>'required',
-          'private'=>'required'
+          'name'=>'required'
         ]);
 
-        $category = Task::find($id);
+        $category = Category::find($id);
         $category->name = $request->get('name');
-        $category->private = $request->get('private');
-        $task->save();
+        $category->private = (int)$request->has('private');
 
-        return redirect('/$category')->with('success', 'Category updated!');
+        $category->save();
+
+        return redirect('/category')->with('success', 'Category updated!');
     }
 
     /**
