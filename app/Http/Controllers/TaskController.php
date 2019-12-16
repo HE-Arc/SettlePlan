@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Task;
 use App\Category;
-//use App\File;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
@@ -21,6 +20,7 @@ class TaskController extends Controller
     {
         $this->middleware('auth');
     }
+    
     /**
      * Display a listing of the resource.
      *
@@ -208,10 +208,6 @@ class TaskController extends Controller
         $task->delete();
 
         return redirect('/categories/'. $categoryID)->with('success', 'Task deleted!');
-<<<<<<< HEAD
-
-=======
->>>>>>> c4cff93fed6160041dda85fedcb9bcdafbddad5f
     }
 
     public function deleteFile($task_id, $file_id)

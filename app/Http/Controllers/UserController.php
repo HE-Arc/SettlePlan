@@ -46,15 +46,15 @@ class UserController extends Controller
 
       if($friend != null)
       {
-        foreach ($user->users()->get() as $value) {
-          if($value->id == $friend->id)
+        foreach ($user->users()->get() as $friend) {
+          if($friend->id == $friend->id)
           {
             return redirect()->route('friends')->with('unsuccess','Demand did\'t send !');
           }
         }
 
-        foreach ($friend->users()->get() as $value) {
-          if($value->id == $user->id)
+        foreach ($friend->users()->get() as $friend) {
+          if($friend->id == $user->id)
           {
             return redirect()->route('friends')->with('unsuccess','Demand did\'t send !');
           }
@@ -133,7 +133,10 @@ class UserController extends Controller
         return redirect('/')->with('success', 'Account deleted !');
     }
 
-
+    /**
+     * Display the friends link to current user
+     * @return \Illuminate\Http\Response
+     */
     public function friends()
     {
       $friendsDemand = null;
@@ -144,25 +147,25 @@ class UserController extends Controller
 
       $friendsDemandID = UserUser::where(['user_id' => $user->id, 'status' => 0])->get();
 
-      foreach ($friendsDemandID as $value) {
-        $friendsDemand[] = User::find($value->getUserIdDemand());
+      foreach ($friendsDemandID as $userFriend) {
+        $friendsDemand[] = User::find($userFriend->getUserIdDemand());
       }
 
       $friendsWaitID = UserUser::where(['user_id1' => $user->id, 'status' => 0])->get();
 
-      foreach ($friendsWaitID as $value) {
-        $friendsWait[] = User::find($value->getUserIdWait());
+      foreach ($friendsWaitID as $userFriend) {
+        $friendsWait[] = User::find($userFriend->getUserIdWait());
       }
 
       $friendsAcceptedID1 = UserUser::where(['user_id' => $user->id, 'status' => 1])->get();
       $friendsAcceptedID2 = UserUser::where(['user_id1' => $user->id, 'status' => 1])->get();
 
-      foreach ($friendsAcceptedID1 as $value) {
-        $friendsAccepted[] = User::find($value->getUserIdDemand());
+      foreach ($friendsAcceptedID1 as $userFriend) {
+        $friendsAccepted[] = User::find($userFriend->getUserIdDemand());
       }
 
-      foreach ($friendsAcceptedID2 as $value) {
-        $friendsAccepted[] = User::find($value->getUserIdWait());
+      foreach ($friendsAcceptedID2 as $userFriend) {
+        $friendsAccepted[] = User::find($userFriend->getUserIdWait());
       }
 
 
@@ -173,6 +176,11 @@ class UserController extends Controller
       ]);
     }
 
+  /**
+   * Delete friend link to current user
+   * @param  int $friend_id
+   * @return \Illuminate\Http\Response
+   */
     public function deleteFriend($friend_id)
     {
         $user = User::find(Auth::user()->id);
@@ -192,6 +200,11 @@ class UserController extends Controller
         return redirect()->route('friends')->with('success','Friend deleted successfully !');
     }
 
+  /**
+   * Accept a demand of friend
+   * @param  int $friend_id
+   * @return \Illuminate\Http\Response
+   */
     public function acceptDemand($friend_id)
     {
       $user = User::find(Auth::user()->id);
