@@ -104,6 +104,7 @@ class TaskController extends Controller
           'end_at' => $request->get('end_at'),
           'category_id' => $request->get('category'),
         ]);
+        $task->save();
 
         $files = null;
 
@@ -123,7 +124,6 @@ class TaskController extends Controller
           }
         }
 
-        $task->save();
         return redirect("/categories/". $task->category_id)->with('success', 'Task Created!');
     }
 
