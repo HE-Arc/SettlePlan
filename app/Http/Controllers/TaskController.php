@@ -58,6 +58,14 @@ class TaskController extends Controller
          return  view('tasks/create', ['categories' => $categories]);
      }
 
+     public function createFromCategory($category_id)
+     {
+         $userId = auth()->user()->id;
+
+         $categories = Category::where('user_id', $userId)->get();
+         return  view('tasks/create', ['categories' => $categories , 'selectedCategory' => $category_id]);
+     }
+
      /**
       * Display the specified resource for the category and the user concerned by the parameters.
       *
@@ -146,6 +154,7 @@ class TaskController extends Controller
 
         return redirect("home");
     }
+
 
     /**
      * Update the specified resource in storage.

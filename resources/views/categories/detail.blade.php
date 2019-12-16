@@ -8,7 +8,7 @@
 
             @if($newTask == 1)
                 <div>
-                    <a style="margin-bottom:5px;" href="{{ route('tasks.create')}}" class="btn btn-primary">New Task</a>
+                    <a style="margin-bottom:5px;" href="{{ route('categories.tasks.edit' , $category->id)}}" class="btn btn-primary">New Task</a>
                 </div>
             @endif
 
@@ -44,6 +44,7 @@
                         @can('crud', $task->category)
                         <td>
                             <a href="{{ route('tasks.edit', $task->id)}}" class="btn btn-primary">Edit</a>
+
                         </td>
                         <td>
                             <form action="{{ route('tasks.destroy', $task->id)}}" method="post">

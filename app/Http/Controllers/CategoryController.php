@@ -75,11 +75,9 @@ class CategoryController extends Controller
 
         // check if the user own the category
         //$category = Category::where('user_id', $user->id)->where("id", $category_id)->get();
-        $category = Category::where("id", $category_id)->get();
+        $category = Category::find($category_id);
 
-        
-
-        if ($user->can('crud', $category[0]) ) {
+        if ($user->can('crud', $category) ) {
         
             $tasks = Task::where("category_id", $category_id)->orderByRaw('end_at', 'DESC')->get();
             $files = null;
@@ -90,12 +88,12 @@ class CategoryController extends Controller
                     $files[$value->id] = $filesTask;
                 }
             }
-            return view('categories.detail', ['tasks' => $tasks , 'user' => $user , 'newTask' => 1, 'category' => $category[0],  'files' => $files]);
+
+            return view('categories.detail', ['tasks' => $tasks , 'user' => $user , 'newTask' => 1, 'category' => $category,  'files' => $files]);
         } 
-        else
-        {
-            return redirect()->route('home');
-        }
+       
+        return redirect()->route('home');
+        
 
         /*if(count($category) == 1)
         {
@@ -181,10 +179,10 @@ class CategoryController extends Controller
     {
         $user = auth()->user();
 
-        $category = Category::where('id', $id)->get();
+        $category = Category::find($id);
 
         if ($user->can('crud',$category)) {
-            return view('categories.edit', ['category' => $category[0]]);
+            return view('categories.edit', ['category' => $category]);
 
         }
         return redirect("home");
