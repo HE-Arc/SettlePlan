@@ -16,7 +16,7 @@
                 </div>
                 <br />
                 @endif
-                <form action="{{ route('users.store') }}" method="POST">
+                <form action="{{ route('user.store') }}" method="POST">
                     @csrf
                     @method('POST')
                     <div class="form-group">

@@ -74,7 +74,7 @@ class UserController extends Controller
     public function show($id)
     {
       $user = User::find($id);
-      return view('users.index', [
+      return view('user.index', [
       'user' => $user
       ]);
     }
@@ -88,7 +88,7 @@ class UserController extends Controller
     public function edit($id)
     {
       $user = User::find($id);
-      return view('users.edit', [
+      return view('user.edit', [
       'user' => $user
       ]);
     }
@@ -110,7 +110,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->update($request->all());
 
-        return redirect()->route('users.index')->with('success','User updated successfully');
+        return redirect()->route('user.index')->with('success','User updated successfully');
     }
 
     /**
@@ -121,13 +121,15 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+
+        return redirect('/home')->with('success', 'Account deleted !');
     }
 
 
     public function friends()
     {
-
       $friendsDemand = null;
       $friendsWait = null;
       $friendsAccepted = null;
@@ -157,8 +159,8 @@ class UserController extends Controller
         $friendsAccepted[] = User::find($value->getUserIdWait());
       }
 
-      
-      return view('users.friends', [
+
+      return view('user.friends', [
       'friendsDemand' => $friendsDemand,
       'friendsWait' => $friendsWait,
       'friendsAccepted' => $friendsAccepted,

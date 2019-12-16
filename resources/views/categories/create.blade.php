@@ -7,7 +7,7 @@
             <div class="panel panel-default">
              <div class="panel-heading">Créer une catégorie</div>
              <div class="panel-body">
-                 <form class="form-horizontal" method="POST" action="{{ route('category.store') }}">
+                 <form class="form-horizontal" method="POST" action="{{ route('categories.store') }}">
                    @csrf
 
                    <table>

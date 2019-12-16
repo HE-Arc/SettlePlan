@@ -13,7 +13,7 @@
   @endif
 
   <div>
-    <a style="margin-bottom:5px;" href="{{ route('category.create')}}" class="btn btn-primary">New category</a>
+    <a style="margin-bottom:5px;" href="{{ route('categories.create')}}" class="btn btn-primary">New category</a>
   </div>
 
   <table class="table table-striped">
@@ -28,15 +28,15 @@
         @foreach($categorys as $category)
         <tr>
             <td>
-                <a href="{{ route('category.show', $category->id)}}">{{$category->name}}</a>
+                <a href="{{ route('categories.show', $category->id)}}">{{$category->name}}</a>
             </td>
             <td>{{$category->private}}</td>
 
             <td>
-                <a href="{{ route('category.edit',$category->id)}}" class="btn btn-primary">Edit</a>
+                <a href="{{ route('categories.edit',$category->id)}}" class="btn btn-primary">Edit</a>
             </td>
             <td>
-                <form action="{{ route('category.destroy', $category->id)}}" method="post">
+                <form action="{{ route('categories.destroy', $category->id)}}" method="post">
                   @csrf
                   @method('DELETE')
                   <button class="btn btn-danger" type="submit">Delete</button>
