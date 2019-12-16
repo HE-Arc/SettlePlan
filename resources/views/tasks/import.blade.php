@@ -19,9 +19,7 @@
                         <div class="form-group">
                             <label for="description" class="col-md-4 control-label">Description</label>
                             <div class="col-md-6">
-                                <textarea id="description" required name="description" class="form-control" rows="3">
-                                    {{ $task->description }}
-                                </textarea>
+                                <textarea class="form-control rounded-0" id="description" name="description" rows="3">{{ $task->description }}</textarea>
                             </div>
                         </div>
 
