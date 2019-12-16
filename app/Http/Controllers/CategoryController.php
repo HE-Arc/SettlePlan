@@ -166,10 +166,10 @@ class CategoryController extends Controller
     {
         $user = auth()->user();
 
-        $category = Category::where('id', $id)->get();
+        $category = Category::find($id);
 
         if ($user->can('crud',$category)) {
-            return view('categories.edit', ['category' => $category[0]]);
+            return view('categories.edit', ['category' => $category]);
 
         }
         return redirect("home");
