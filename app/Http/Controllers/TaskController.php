@@ -228,8 +228,7 @@ class TaskController extends Controller
 
       return redirect('/tasks/'. $task_id . '/edit');
     }
-
-
+    
     public function download($category_id , $task_id , $file_id)
     {
       $fileDB = \App\File::find($file_id);
